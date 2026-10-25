@@ -1,0 +1,279 @@
+@media only screen and (max-width: 900px) {
+  .navbar-logo img {
+    width: 9rem;
+  }
+
+  .main-nav{
+    padding: 0.5rem 1rem;
+  }
+
+  .navbar-content {
+    position: absolute;
+    background-color: #d8edfe;
+    left: -100%;
+    top: 100%;
+    width: 100%;
+    padding-block: 30px;
+    transition: 0.2s ease-in-out;
+  }
+
+  .navbar-content.active {
+    left: 0;
+  }
+
+  .ham-hidden {
+    display: none;
+  }
+
+  .nav-toggle {
+    display: block;
+  }
+
+  .navbar-content ul {
+    flex-direction: column;
+    gap: 0px;
+  }
+
+  .navbar-content ul li {
+    width: 100%;
+    max-width: 90%;
+  }
+
+  .hover-link {
+    padding: 10px 0px;
+    display: block;
+    width: 100%;
+  }
+
+  .btn-ham {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .ham-responsive {
+    font-size: 14px;
+    border: none;
+    background-color: #2b9cff;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 5px;
+  }
+
+  .hover-link:hover {
+    background-color: #d8edfe;
+    color: black;
+    padding: 10px 0px;
+  }
+
+  .menu-hover {
+    padding: 5px;
+    background-color: #d8edfe;
+    border-radius: 5px;
+  }
+
+  /* hero section */
+
+  .hero-img {
+    margin: 100px auto;
+  }
+
+  .hero-content span {
+    font-size: 40px;
+    padding: 0px 10px;
+  }
+
+  .hero-content div {
+  padding: 0rem 0rem;
+}
+
+  .hero-content p {
+    font-size: 18px;
+    padding: 0px 11px;
+  }
+
+  .hero-content button {
+    font-size: 15px;
+    padding: 10px 20px;
+  }
+
+  /* service section */
+
+  .service-header {
+    font-size: 26px;
+    text-align: center;
+  }
+
+  .service-box {
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .main-choose {
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 25px;
+  }
+
+  .main-header {
+    font-size: 34px;
+  }
+
+  .main-content {
+    font-size: 12px;
+  }
+
+  .image-choose,.content-choose {
+    width: 90%;
+  }
+
+  .image-choose img {
+    width: 22rem;
+  }
+
+  .content-choose button {
+    width: 7rem;
+    padding: 6px 0px;
+    align-items: center;
+  }
+
+  .footer-Service {
+    flex-direction: column;
+  }
+
+  .First-box, .Second-box, .Third-box, .Forth-box {
+    width: 100%;
+  }
+
+  .main-contact {
+    padding: 4rem 0rem 2rem 0rem;
+  }
+  
+  .contact-box {
+    flex-direction: column;
+    gap: 27px;
+    padding-top: 30px;
+  }
+
+  .contact-service {
+    width: auto;
+  }
+
+  .contact-map {
+    width: auto;
+  }
+
+  .contact-map iframe {
+    width: 100%;
+  }
+
+  /* About section */
+
+  .about-img {
+    margin-top: 52.38px;
+  }
+
+  
+  .about-content span {
+    font-size: 4rem;
+  }
+
+  .about-content div {
+    padding: 0rem 1rem;
+  }
+
+  .about-content p {
+    font-size: 1.1rem;
+  }
+
+  /* Our story section */
+
+  .story-header {
+    font-size: 1.5rem;
+  }
+
+  .story-content {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .story-img {
+    width: 100%;
+  }
+
+  .story {
+    width: 100%;
+  }
+
+  /* Our goals section */
+
+  .frame-header {
+    text-align: center;
+    font-size: 2rem;
+  }
+
+  .frame {
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .submenu {
+    position: static !important; 
+    display: none !important;
+    background-color: white;
+    padding: 0 !important; 
+    border-radius: 0 0 0 0 !important; 
+    border: none;
+    border: none;
+    max-height: 0;
+    overflow: hidden; 
+    transition: max-height 3s ease-in-out !important;
+  }
+
+  .dropdown.active .submenu {
+    display: block !important;
+    max-height: 350px !important;
+  }
+
+  .submenu li {
+    padding: 0;
+    border-bottom: 1px solid rgba(43,156,255,0.2);
+  }
+
+  .submenu a {
+    padding: 1rem 0rem !important;
+    color: #000000 !important;
+    font-weight: 500 !important;
+  }
+
+  .submenu a:hover {
+    border-radius: 0px;
+  }
+
+  .dropdown ul li {
+    max-width: 100%;
+  }
+
+  .drop-toggle {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 10px 0px;
+  }
+
+  .drop-icon {
+    position: absolute;
+    right: 2rem;
+    transition: transform 0.3s ease;
+    font-size: 0.9rem; 
+    color: #94a3b8;
+  }
+
+  .dropdown.active .drop-icon { 
+    transform: rotate(180deg); 
+    color: #2b9cff;
+  }
+
+}

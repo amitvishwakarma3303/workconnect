@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Work Connect - Smart Labouring System</title>
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <link rel="stylesheet" href="./assets/css/media-queries.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Manrope', sans-serif; background: radial-gradient(circle at 0% 0%, #dbeafe 0%, #f8fafc 40%, #f8fafc 100%); color: #0f172a; }
+    nav { background: rgba(255,255,255,0.86); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(15,23,42,0.08); }
+    .about-img { border-radius: 0 0 28px 28px; overflow: hidden; box-shadow: 0 20px 45px rgba(15,23,42,0.18); }
+    .about-shadow { background: linear-gradient(120deg, rgba(2,6,23,.72), rgba(30,58,138,.58)); opacity: 1; }
+    .about-content span { font-size: clamp(2.8rem, 8vw, 5rem); font-weight: 800; letter-spacing: -1px; }
+    .story-header, .frame-header { color: #0f172a; font-weight: 800; letter-spacing: -0.6px; }
+    .story-content { gap: 2rem; align-items: center; }
+    .story-img img { border-radius: 18px; box-shadow: 0 18px 36px rgba(15,23,42,0.14); }
+    .story { background: #fff; border: 1px solid rgba(15,23,42,0.08); border-radius: 18px; padding: 1.3rem 1.5rem; box-shadow: 0 14px 30px rgba(15,23,42,0.08); }
+    .frame-box { border: 1px solid rgba(15,23,42,0.08); box-shadow: 0 12px 30px rgba(15,23,42,0.08); border-radius: 16px; transition: transform .2s ease, box-shadow .2s ease; }
+    .frame-box:hover { transform: translateY(-6px); box-shadow: 0 20px 38px rgba(15,23,42,0.14); background-color: #0ea5e9; }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav>
+      <div class="main-nav">
+        <a href="#" class="navbar-logo">
+          <img src="./assets/images/header logo.png" alt="company logo">
+        </a>
+        <div class="navbar-content" id="navbar-content">
+          <ul>
+            <li><a href="home.html" class="hover-link">Home</a></li>
+            <li><a href="about.html" class="hover-link">About</a></li>
+            <li><a href="contact.html" class="hover-link">Contact</a></li>
+            <li class="ham-hidden"><a href="login.php" class="ham-responsive">Login</a></li>
+          </ul>
+        </div>
+        <div class="btn-ham">
+          <a href="login.php" class="ham-responsive">Login</a>
+          <a href="#" class="nav-toggle menu-hover" id="nav-toggle">
+            <i class="fa-solid fa-bars" style="color: #000000;"></i>
+          </a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <section>
+    <div class="about-img">
+      <div class="about-shadow"></div>
+      <div class="about-content">
+        <span>About Us</span>
+        <div>
+          <p>Smart Labouring System is a digital platform connecting labourers and employers
+            , simplifying job search, hiring, communication, and labour management through
+            secure, transparent, and efficient technology-driven solutions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="story-container">
+      <div class="story-header">Our Story For Creating This Website</div>
+      <div class="story-content">
+        <div class="story-img">
+          <img src="./assets/images/story-image.png" alt="story image">
+        </div>
+        <div class="story">
+          <p>The idea for creating this website was born from the real-life difficulties faced by both workers and
+            employers in finding suitable job opportunities. Many workers spend long hours searching for work, often
+            relying on word of mouth or middlemen, which leads to wasted time, uncertainty, and missed opportunities. At
+            the same time, employers struggle to find skilled and reliable workers when they need them, causing delays
+            and increased costs.</p>
+          <p>To address these challenges, the Smart Labouring System was developed as a digital solution that connects
+            workers and employers on a single platform. This website allows workers to easily search for jobs based on
+            their skills and location, while employers can quickly find and hire suitable labourers. The platform
+            reduces dependency on traditional methods and eliminates unnecessary intermediaries.</p>
+          <p>By providing direct communication, transparent processes, and easy access to job information, this website
+            aims to save time, reduce effort, and improve trust between both parties. The Smart Labouring System is
+            driven by the goal of creating fair employment opportunities, simplifying labour management, and
+            contributing to social and economic development through the use of modern technology.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="frame-header">Think About The Future</div>
+    <div class="frame">
+      <div class="frame-box">
+        <div class="frame-icon"><img src="./assets/images/goal.png" alt="service image"></div>
+        <div class="frame-sec">
+          <span>Goal</span>
+          <p>The goal of the Smart Labouring System is to connect labourers and employers digitally, simplify hiring and
+            job searching, reduce time and cost, ensure transparency, and improve workforce management through reliable
+            technology.</p>
+        </div>
+      </div>
+      <div class="frame-box">
+        <div class="frame-icon"><img src="./assets/images/vision.png" alt="service image"></div>
+        <div class="frame-sec">
+          <span>Vision</span>
+          <p>The vision of the Smart Labouring System is to create a trusted digital platform that empowers labourers,
+            simplifies hiring for employers, promotes fair employment, and supports sustainable economic and social
+            development.</p>
+        </div>
+      </div>
+      <div class="frame-box">
+        <div class="frame-icon"><img src="./assets/images/strategy.png" alt="service image"></div>
+        <div class="frame-sec">
+          <span>Strategy</span>
+          <p>The strategy of the Smart Labouring System focuses on leveraging digital technology to connect labourers
+            and employers efficiently, improve accessibility, ensure data security, enhance user experience, and
+            continuously upgrade features for reliable labour management.</p>
+        </div>
+      </div>
+      <div class="frame-box">
+        <div class="frame-icon"><img src="./assets/images/policy.png" alt="service image"></div>
+        <div class="frame-sec">
+          <span>Quality Policy</span>
+          <p>The Quality Policy of the Smart Labouring System commits to delivering a secure, reliable, and
+            user-friendly platform, ensuring data accuracy, transparency, continuous improvement, and high service
+            standards to achieve complete user satisfaction.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-Service">
+
+      <div class="First-box">
+        <div class="footer-logo">
+          <img src="./assets/images/header logo.png" alt="footer logo">
+        </div>
+        <div class="footer-paragraph">
+          <p>Smart Labouring System is a digital platform connecting labourers and employers, enabling fast hiring, easy
+            job search, direct communication, and efficient workforce management.</p>
+        </div>
+      </div>
+
+      <div class="Second-box">
+        <div class="footer-header">Quick Links</div>
+        <div class="Quick-Link">
+          <span><img src="./assets/images/home.png" alt="home icon"><a href="home.html">Home</a></span>
+          <span><img src="./assets/images/about.png" alt="about icon"><a href="about.html">About</a></span>
+          <span><img src="./assets/images/jobs.png" alt="jobs icon"><a href="#">Jobs</a></span>
+          <span><img src="./assets/images/contact.png" alt="contact icon"><a href="contact.html">Contact</a></span>
+        </div>
+      </div>
+
+      <div class="Third-box">
+        <div class="footer-header">Contact Details</div>
+        <div class="Contact-footer">
+          <span><img src="./assets/images/phone.png" alt="phone icon">+91 9503690491</span>
+          <span><img src="./assets/images/email.png" alt="email icon">amitvishwakarma3939@gmail.com</span>
+          <span><img src="./assets/images/location.png" alt="location icon">Room No.402, 2nd Floor, Mehta Chembur
+            bulding, Nallasopara (East), Maharashtra, India</span>
+        </div>
+      </div>
+
+      <div class="Forth-box">
+        <div class="footer-header">Follow On Us</div>
+        <div class="Follow-icon">
+          <a href="https://www.youtube.com/" target="_blank"><i class="fa-brands fa-youtube fa-2xl"
+              style="color: #ffffff;"></i></a>
+          <a href="https://www.instagram.com/" target="_blank"><i class="fa-brands fa-instagram fa-2xl"
+              style="color: #ffffff;"></i></a>
+          <a href="https://www.facebook.com/" target="_blank"><i class="fa-brands fa-facebook fa-2xl"
+              style="color: #ffffff;"></i></a>
+          <a href="https://in.linkedin.com/" target="_blank"><i class="fa-brands fa-linkedin fa-2xl"
+              style="color: #ffffff;"></i></a>
+          <a href="https://web.whatsapp.com/" target="_blank"><i class="fa-brands fa-whatsapp fa-2xl"
+              style="color: #ffffff;"></i></a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="Copyright-content">© 2026 Smart Labouring System | All Rights Reserved</div>
+  </footer>
+
+  <script src="./assets/js/javascript.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Work Connect - Smart Labouring System</title>
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <link rel="stylesheet" href="./assets/css/media-queries.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --brand-1: #1e3a8a;
+      --brand-2: #0ea5e9;
+      --surface: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --ring: rgba(14, 165, 233, 0.25);
+    }
+    body { font-family: 'Manrope', sans-serif; color: var(--text-main); background: radial-gradient(circle at 10% 0%, #e0f2fe 0%, #f8fafc 40%, #f8fafc 100%); }
+    nav { background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(15,23,42,0.06); }
+    .hero-img { box-shadow: 0 25px 60px rgba(30,58,138,0.22); overflow: hidden; }
+    .hero-shadow { background: linear-gradient(115deg, rgba(2,6,23,0.7), rgba(30,58,138,0.55)); opacity: 1; }
+    .hero-content span { font-weight: 800; letter-spacing: -0.5px; }
+    .hero-content button, .content-choose button { background-image: linear-gradient(120deg, var(--brand-1), var(--brand-2)); border: none; box-shadow: 0 14px 28px rgba(14,165,233,0.3); }
+    .service-header, .header-contact, .story-header, .frame-header { letter-spacing: -0.6px; }
+    .box, .frame-box, .contact-service { border: 1px solid rgba(15,23,42,0.08); box-shadow: 0 12px 30px rgba(15,23,42,0.08); border-radius: 18px; transition: transform .2s ease, box-shadow .2s ease; }
+    .box:hover, .frame-box:hover { transform: translateY(-6px); box-shadow: 0 18px 38px rgba(15,23,42,0.14); }
+    .main-choose { background: linear-gradient(135deg, #dbeafe, #ecfeff); border-top: 1px solid rgba(15,23,42,0.06); border-bottom: 1px solid rgba(15,23,42,0.06); }
+    .contact-service { background: linear-gradient(180deg, #ffffff, #f8fbff); }
+    .form-group input, .form-group textarea { border: 1px solid #cbd5e1; transition: .2s ease; font-family: inherit; }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--brand-2); box-shadow: 0 0 0 4px var(--ring); outline: none; }
+    .submit-btn { width: 100%; border: none; border-radius: 12px; padding: 13px 16px; color: #fff; font-weight: 700; letter-spacing: .2px; cursor: pointer; background: linear-gradient(120deg, var(--brand-1), var(--brand-2)); display: flex; align-items: center; justify-content: center; gap: 10px; }
+    .submit-btn:disabled { opacity: .8; cursor: not-allowed; }
+    .loader { width: 16px; height: 16px; border-radius: 50%; border: 2px solid rgba(255,255,255,.4); border-top-color: #fff; animation: spin .7s linear infinite; display: none; }
+    .submit-btn.is-loading .loader { display: inline-block; }
+    .form-status { margin-bottom: 14px; padding: 10px 12px; border-radius: 10px; font-size: 14px; font-weight: 600; display: none; }
+    .form-status.success { background: #dcfce7; color: #166534; border: 1px solid #86efac; display: block; }
+    .form-status.error { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; display: block; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav>
+      <div class="main-nav">
+        <a href="#" class="navbar-logo">
+          <img src="./assets/images/header logo.png" alt="company logo">
+        </a>
+        <div class="navbar-content" id="navbar-content">
+          <ul>
+            <li><a href="home.html" class="hover-link">Home</a></li>
+            <li><a href="about.html" class="hover-link">About</a></li>
+            <li><a href="contact.html" class="hover-link">Contact</a></li>
+            <li class="ham-hidden"><a href="login.php" class="ham-responsive">Login</a></li>
+          </ul>
+        </div>
+        <div class="btn-ham">
+          <a href="login.php" class="ham-responsive">Login</a>
+          <a href="#" class="nav-toggle menu-hover" id="nav-toggle">
+            <i class="fa-solid fa-bars" style="color: #000000;"></i>
+          </a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-main">
+      <div class="hero-img">
+        <div class="hero-shadow"></div>
+        <div class="hero-content">
+          <span>Connecting Labourers and Employers Digitally</span>
+          <div>
+            <p>Find skilled workers or job opportunities easily with Smart Labouring System, a digital platform that
+              connects labourers and employers, streamlines hiring, improves communication, saves time, and boosts
+              productivity.</p>
+          </div>
+          <button type="button">Get Started</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="service">
+    <div class="main-box">
+      <div class="service-header">Our Consulting Special Features</div>
+      <div class="service-box grid-container sm-grid sm-grid-cols-1 md-grid md-grid-cols-2 lg-grid-cols-3 xl-grid-cols-5">
+        <div class="box1 box">
+          <div class="icon"><img src="./assets/images/box1.png" alt="service image"></div>
+          <div class="icon-sec">
+            <span>Skilled worker hiring</span>
+            <p>Skilled worker hiring made easier by connecting qualified labourers with employers quickly and
+              efficiently.</p>
+          </div>
+        </div>
+        <div class="box2 box">
+          <div class="icon"><img src="./assets/images/box2.png" alt="service image"></div>
+          <div class="icon-sec">
+            <span>Location-based matching</span>
+            <p>Location-based matching helps employers find nearby workers quickly, reducing travel time and improving
+              hiring efficiency.</p>
+          </div>
+        </div>
+        <div class="box3 box">
+          <div class="icon"><img src="./assets/images/box3.png" alt="service image"></div>
+          <div class="icon-sec">
+            <span>Customer support</span>
+            <p>Customer support provides timely assistance, resolves issues efficiently, and ensures a smooth experience
+              for all users.</p>
+          </div>
+        </div>
+        <div class="box4 box">
+          <div class="icon"><img src="./assets/images/box4.png" alt="service image"></div>
+          <div class="icon-sec">
+            <span>Direct communication</span>
+            <p>Direct communication allows employers and labourers to interact instantly, share updates, and coordinate
+              work effectively.</p>
+          </div>
+        </div>
+        <div class="box5 box">
+          <div class="icon"><img src="./assets/images/box5.png" alt="service image"></div>
+          <div class="icon-sec">
+            <span>Cost-effective strategies</span>
+            <p>Cost-effective strategies help reduce operational costs, optimize resource usage, and improve overall
+              efficiency for businesses.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="main-choose">
+      <div class="image-choose"><img src="./assets/images/choose-image.jpg" alt="choose us"></div>
+      <div class="content-choose">
+        <span class="main-header">Why You Choose Us?</span>
+        <div class="main-content">
+          <span><img src="./assets/images/check-icon.png" alt="check icon">Easy and fast hiring process connects workers
+            and employers.</span>
+          <span><img src="./assets/images/check-icon.png" alt="check icon">24/7 customer support providing reliable
+            assistance and resolution.</span>
+          <span><img src="./assets/images/check-icon.png" alt="check icon">Trusted and reliable platform for secure
+            hiring solutions.</span>
+          <span><img src="./assets/images/check-icon.png" alt="check icon">Skilled and verified workers available for
+            efficient job matching.</span>
+          <span><img src="./assets/images/check-icon.png" alt="check icon">Quick hiring and job search for efficient
+            workforce management.</span>
+        </div>
+        <button type="button">Learn More<img class="into" src="./assets/images/arrow-icon.png"
+            alt="arrow icon"></button>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="main-contact">
+      <div class="header-contact">Get In Touch!</div>
+      <div class="contact-box">
+        <div class="contact-service">
+          <h1>Contact Us</h1>
+          <div id="form-status" class="form-status" role="status" aria-live="polite"></div>
+          <form action="form_submit.php" method="POST">
+            <input type="hidden" name="source_page" value="home">
+            <div class="form-group">
+              <label for="name">Enter Your Name</label>
+              <input type="text" id="name" name="name" class="hover-outline" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Enter Your Email</label>
+              <input type="email" id="email" name="email" class="hover-outline" required>
+            </div>
+            <div class="form-group">
+              <label for="city">Enter Your City</label>
+              <input type="text" id="city" name="city" class="hover-outline" required>
+            </div>
+            <div class="form-group">
+              <label for="message">Enter Message</label>
+              <textarea id="message" name="message" rows="10" class="hover-outline" required></textarea>
+            </div>
+            <div class="btn">
+              <button type="submit" class="submit-btn">
+                <span class="btn-text">Send Message</span>
+                <span class="loader" aria-hidden="true"></span>
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="contact-map">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60209.606611838026!2d72.7647090875237!3d19.40806695751064!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7a93891055565%3A0xf39283d30d9ad8cc!2sNala%20Sopara%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1769418418705!5m2!1sen!2sin"
+            width="600" height="auto" style="border:0;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-Service">
+
+      <div class="First-box">
+        <div class="footer-logo">
+          <img src="./assets/images/header logo.png" alt="footer logo">
+        </div>
+        <div class="footer-paragraph">
+          <p>Smart Labouring System is a digital platform connecting labourers and employers, enabling fast hiring, easy
+            job search, direct communication, and efficient workforce management.</p>
+        </div>
+      </div>
+
+      <div class="Second-box">
+        <div class="footer-header">Quick Links</div>
+        <div class="Quick-Link">
+          <span><img src="./assets/images/home.png" alt="home icon"><a href="home.html">Home</a></span>
+          <span><img src="./assets/images/about.png" alt="about icon"><a href="about.html">About</a></span>
+          <span><img src="./assets/images/jobs.png" alt="jobs icon"><a href="#">Jobs</a></span>
+          <span><img src="./assets/images/contact.png" alt="contact icon"><a href="contact.html">Contact</a></span>
+        </div>
+      </div>
+
+      <div class="Third-box">
+        <div class="footer-header">Contact Details</div>
+        <div class="Contact-footer">
+          <span><img src="./assets/images/phone.png" alt="phone icon">+91 9503690491</span>
+          <span><img src="./assets/images/email.png" alt="email icon">amitvishwakarma3939@gmail.com</span>
+          <span><img src="./assets/images/location.png" alt="location icon">Room No.402, 2nd Floor, Mehta Chembur
+            bulding, Nallasopara (East), Maharashtra, India</span>
+        </div>
+      </div>
+
+      <div class="Forth-box">
+        <div class="footer-header">Follow On Us</div>
+        <div class="Follow-icon">
+          <a href="https://www.youtube.com/" target="_blank"><i class="fa-brands fa-youtube fa-2xl"
+              style="color: #ffffff;"></i></a>
+          <a href="https://www.instagram.com/" target="_blank"><i class="fa-brands fa-instagram fa-2xl"
+              style="color: #ffffff;"></i></a>
+          <a href="https://www.facebook.com/" target="_blank"><i class="fa-brands fa-facebook fa-2xl"
+              style="color: #ffffff;"></i></a>
+          <a href="https://in.linkedin.com/" target="_blank"><i class="fa-brands fa-linkedin fa-2xl"
+              style="color: #ffffff;"></i></a>
+          <a href="https://web.whatsapp.com/" target="_blank"><i class="fa-brands fa-whatsapp fa-2xl"
+              style="color: #ffffff;"></i></a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="Copyright-content">© 2026 Smart Labouring System | All Rights Reserved</div>
+  </footer>
+
+  <script src="./assets/js/javascript.js"></script>
+  <script>
+    (function () {
+      const statusEl = document.getElementById('form-status');
+      const form = document.querySelector('.contact-service form');
+      const btn = form ? form.querySelector('.submit-btn') : null;
+      const btnText = btn ? btn.querySelector('.btn-text') : null;
+      const params = new URLSearchParams(window.location.search);
+      const formStatus = params.get('form');
+
+      if (statusEl && formStatus) {
+        const map = {
+          success: { cls: 'success', msg: 'Message submitted successfully. We will contact you soon.' },
+          invalid_email: { cls: 'error', msg: 'Please enter a valid email address.' },
+          too_long: { cls: 'error', msg: 'Input is too long. Please shorten your message.' },
+          error: { cls: 'error', msg: 'Could not submit right now. Please try again.' }
+        };
+        const data = map[formStatus] || map.error;
+        statusEl.classList.add(data.cls);
+        statusEl.textContent = data.msg;
+        history.replaceState({}, '', window.location.pathname);
+      }
+
+      if (form && btn && btnText) {
+        form.addEventListener('submit', function () {
+          btn.classList.add('is-loading');
+          btn.disabled = true;
+          btnText.textContent = 'Submitting...';
+        });
+      }
+    })();
+  </script>
+</body>
+
+</html>

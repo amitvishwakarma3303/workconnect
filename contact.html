@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Work Connect - Smart Labouring System</title>
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <link rel="stylesheet" href="./assets/css/media-queries.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --brand-1: #0f172a;
+      --brand-2: #0ea5e9;
+      --ring: rgba(14, 165, 233, 0.25);
+    }
+    body { font-family: 'Manrope', sans-serif; background: radial-gradient(circle at 80% 0%, #dbeafe 0%, #f8fafc 45%, #f8fafc 100%); color: #0f172a; }
+    nav { background: rgba(255,255,255,0.86); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(15,23,42,0.08); }
+    .main-contact { padding-top: 8rem; }
+    .header-contact { font-weight: 800; letter-spacing: -0.8px; font-size: clamp(2rem, 4vw, 3rem); }
+    .contact-service, .contact-map iframe { border-radius: 18px; }
+    .contact-service { border: 1px solid rgba(15,23,42,0.08); background: linear-gradient(180deg,#fff,#f8fbff); box-shadow: 0 16px 35px rgba(15,23,42,0.09); }
+    .contact-service h1 { font-family: inherit; font-size: 2rem; color: #0f172a; }
+    .form-group input, .form-group textarea { border: 1px solid #cbd5e1; transition: .2s ease; font-family: inherit; }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--brand-2); box-shadow: 0 0 0 4px var(--ring); outline: none; }
+    .submit-btn { width: 100%; border: none; border-radius: 12px; padding: 13px 16px; color: #fff; font-weight: 700; cursor: pointer; background: linear-gradient(120deg, var(--brand-1), var(--brand-2)); display: flex; align-items: center; justify-content: center; gap: 10px; }
+    .submit-btn:disabled { opacity: .8; cursor: not-allowed; }
+    .loader { width: 16px; height: 16px; border-radius: 50%; border: 2px solid rgba(255,255,255,.4); border-top-color: #fff; animation: spin .7s linear infinite; display: none; }
+    .submit-btn.is-loading .loader { display: inline-block; }
+    .form-status { margin-bottom: 14px; padding: 10px 12px; border-radius: 10px; font-size: 14px; font-weight: 600; display: none; }
+    .form-status.success { background: #dcfce7; color: #166534; border: 1px solid #86efac; display: block; }
+    .form-status.error { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; display: block; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav>
+      <div class="main-nav">
+        <a href="#" class="navbar-logo">
+          <img src="./assets/images/header logo.png" alt="company logo">
+        </a>
+        <div class="navbar-content" id="navbar-content">
+          <ul>
+            <li><a href="home.html" class="hover-link">Home</a></li>
+            <li><a href="about.html" class="hover-link">About</a></li>
+            <li><a href="contact.html" class="hover-link">Contact</a></li>
+            <li class="ham-hidden"><a href="login.php" class="ham-responsive">Login</a></li>
+          </ul>
+        </div>
+        <div class="btn-ham">
+          <a href="login.php" class="ham-responsive">Login</a>
+          <a href="#" class="nav-toggle menu-hover" id="nav-toggle">
+            <i class="fa-solid fa-bars" style="color: #000000;"></i>
+          </a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <section>
+    <div class="main-contact">
+      <div class="header-contact">Get In Touch!</div>
+      <div class="contact-box">
+        <div class="contact-service">
+          <h1>Contact Us</h1>
+          <div id="form-status" class="form-status" role="status" aria-live="polite"></div>
+          <form action="form_submit.php" method="POST">
+            <input type="hidden" name="source_page" value="contact">
+            <div class="form-group">
+              <label for="name">Enter Your Name</label>
+              <input type="text" id="name" name="name" class="hover-outline" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Enter Your Email</label>
+              <input type="email" id="email" name="email" class="hover-outline" required>
+            </div>
+            <div class="form-group">
+              <label for="city">Enter Your City</label>
+              <input type="text" id="city" name="city" class="hover-outline" required>
+            </div>
+            <div class="form-group">
+              <label for="message">Enter Message</label>
+              <textarea id="message" name="message" rows="10" class="hover-outline" required></textarea>
+            </div>
+            <div class="btn">
+              <button type="submit" class="submit-btn">
+                <span class="btn-text">Send Message</span>
+                <span class="loader" aria-hidden="true"></span>
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="contact-map">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60209.606611838026!2d72.7647090875237!3d19.40806695751064!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7a93891055565%3A0xf39283d30d9ad8cc!2sNala%20Sopara%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1769418418705!5m2!1sen!2sin"
+            width="600" height="auto" style="border:0;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-Service">
+
+      <div class="First-box">
+        <div class="footer-logo">
+          <img src="./assets/images/header logo.png" alt="footer logo">
+        </div>
+        <div class="footer-paragraph">
+          <p>Smart Labouring System is a digital platform connecting labourers and employers, enabling fast hiring, easy
+            job search, direct communication, and efficient workforce management.</p>
+        </div>
+      </div>
+
+      <div class="Second-box">
+        <div class="footer-header">Quick Links</div>
+        <div class="Quick-Link">
+          <span><img src="./assets/images/home.png" alt="home icon"><a href="home.html">Home</a></span>
+          <span><img src="./assets/images/about.png" alt="about icon"><a href="about.html">About</a></span>
+          <span><img src="./assets/images/jobs.png" alt="jobs icon"><a href="#">Jobs</a></span>
+          <span><img src="./assets/images/contact.png" alt="contact icon"><a href="contact.html">Contact</a></span>
+        </div>
+      </div>
+
+      <div class="Third-box">
+        <div class="footer-header">Contact Details</div>
+        <div class="Contact-footer">
+          <span><img src="./assets/images/phone.png" alt="phone icon">+91 9503690491</span>
+          <span><img src="./assets/images/email.png" alt="email icon">amitvishwakarma3939@gmail.com</span>
+          <span><img src="./assets/images/location.png" alt="location icon">Room No.402, 2nd Floor, Mehta Chembur
+            bulding, Nallasopara (East), Maharashtra, India</span>
+        </div>
+      </div>
+
+      <div class="Forth-box">
+        <div class="footer-header">Follow On Us</div>
+        <div class="Follow-icon">
+          <a href="https://www.youtube.com/" target="_blank"><i class="fa-brands fa-youtube fa-2xl"
+              style="color: #ffffff;"></i></a>
+          <a href="https://www.instagram.com/" target="_blank"><i class="fa-brands fa-instagram fa-2xl"
+              style="color: #ffffff;"></i></a>
+          <a href="https://www.facebook.com/" target="_blank"><i class="fa-brands fa-facebook fa-2xl"
+              style="color: #ffffff;"></i></a>
+          <a href="https://in.linkedin.com/" target="_blank"><i class="fa-brands fa-linkedin fa-2xl"
+              style="color: #ffffff;"></i></a>
+          <a href="https://web.whatsapp.com/" target="_blank"><i class="fa-brands fa-whatsapp fa-2xl"
+              style="color: #ffffff;"></i></a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="Copyright-content">© 2026 Smart Labouring System | All Rights Reserved</div>
+  </footer>
+
+  <script src="./assets/js/javascript.js"></script>
+  <script>
+    (function () {
+      const statusEl = document.getElementById('form-status');
+      const form = document.querySelector('.contact-service form');
+      const btn = form ? form.querySelector('.submit-btn') : null;
+      const btnText = btn ? btn.querySelector('.btn-text') : null;
+      const params = new URLSearchParams(window.location.search);
+      const formStatus = params.get('form');
+
+      if (statusEl && formStatus) {
+        const map = {
+          success: { cls: 'success', msg: 'Message submitted successfully. We will contact you soon.' },
+          invalid_email: { cls: 'error', msg: 'Please enter a valid email address.' },
+          too_long: { cls: 'error', msg: 'Input is too long. Please shorten your message.' },
+          error: { cls: 'error', msg: 'Could not submit right now. Please try again.' }
+        };
+        const data = map[formStatus] || map.error;
+        statusEl.classList.add(data.cls);
+        statusEl.textContent = data.msg;
+        history.replaceState({}, '', window.location.pathname);
+      }
+
+      if (form && btn && btnText) {
+        form.addEventListener('submit', function () {
+          btn.classList.add('is-loading');
+          btn.disabled = true;
+          btnText.textContent = 'Submitting...';
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
