@@ -1,195 +1,895 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Work Connect - Smart Labouring System</title>
-  <link rel="stylesheet" href="./assets/css/style.css">
-  <link rel="stylesheet" href="./assets/css/media-queries.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-    integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <title>About Us - Work Connect | Worker Job Portal</title>
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
   <style>
-    body { font-family: 'Manrope', sans-serif; background: radial-gradient(circle at 0% 0%, #dbeafe 0%, #f8fafc 40%, #f8fafc 100%); color: #0f172a; }
-    nav { background: rgba(255,255,255,0.86); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(15,23,42,0.08); }
-    .about-img { border-radius: 0 0 28px 28px; overflow: hidden; box-shadow: 0 20px 45px rgba(15,23,42,0.18); }
-    .about-shadow { background: linear-gradient(120deg, rgba(2,6,23,.72), rgba(30,58,138,.58)); opacity: 1; }
-    .about-content span { font-size: clamp(2.8rem, 8vw, 5rem); font-weight: 800; letter-spacing: -1px; }
-    .story-header, .frame-header { color: #0f172a; font-weight: 800; letter-spacing: -0.6px; }
-    .story-content { gap: 2rem; align-items: center; }
-    .story-img img { border-radius: 18px; box-shadow: 0 18px 36px rgba(15,23,42,0.14); }
-    .story { background: #fff; border: 1px solid rgba(15,23,42,0.08); border-radius: 18px; padding: 1.3rem 1.5rem; box-shadow: 0 14px 30px rgba(15,23,42,0.08); }
-    .frame-box { border: 1px solid rgba(15,23,42,0.08); box-shadow: 0 12px 30px rgba(15,23,42,0.08); border-radius: 16px; transition: transform .2s ease, box-shadow .2s ease; }
-    .frame-box:hover { transform: translateY(-6px); box-shadow: 0 20px 38px rgba(15,23,42,0.14); background-color: #0ea5e9; }
+    :root {
+      --primary: #f97316;
+      --primary-dark: #ea580c;
+      --primary-light: #fff7ed;
+      --secondary: #0d9488;
+      --secondary-dark: #0f766e;
+      --secondary-light: #f0fdfa;
+      --dark: #0c1a2e;
+      --dark-2: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --surface: #ffffff;
+      --bg: #f8fafc;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; overflow-x: hidden; max-width: 100%; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; color: var(--dark-2); background: var(--bg); line-height: 1.6; overflow-x: hidden; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+
+    /* ---- NAVBAR (Identical across Home, About, Contact) ---- */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.95); backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(15,23,42,0.08);
+      padding: 0 1.5rem;
+    }
+    .nav-inner {
+      max-width: 1200px; margin: auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 68px;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .nav-logo-text {
+      display: flex; flex-direction: column; line-height: 1.1;
+    }
+    .nav-logo-title {
+      font-size: 1.18rem; font-weight: 800; color: var(--dark); letter-spacing: -0.3px;
+    }
+    .nav-logo-sub {
+      font-size: 0.65rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; margin-top: 1px;
+    }
+    .nav-logo .logo-icon {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 17px;
+    }
+    .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+    .nav-links a { font-size: 0.875rem; font-weight: 600; color: var(--text-muted); transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--primary); font-weight: 700; }
+    .nav-cta {
+      display: flex; gap: 10px; align-items: center;
+    }
+    .btn-outline {
+      padding: 8px 18px; border-radius: 10px; font-size: 0.85rem; font-weight: 700;
+      border: 2px solid var(--border); color: var(--dark-2); transition: all 0.2s;
+    }
+    .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+    .btn-primary {
+      padding: 9px 20px; border-radius: 10px; font-size: 0.85rem; font-weight: 700;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white; transition: all 0.2s; box-shadow: 0 4px 12px rgba(249,115,22,0.3);
+    }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(249,115,22,0.4); }
+    .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 6px; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--dark); border-radius: 4px; transition: all 0.3s; margin: 4px 0; }
+
+    .mobile-nav {
+      display: none; position: fixed; top: 68px; left: 0; right: 0; z-index: 99;
+      background: white; border-bottom: 1px solid var(--border);
+      padding: 1.5rem; flex-direction: column; gap: 1rem;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a { font-size: 0.95rem; font-weight: 600; color: var(--dark-2); padding: 8px 0; border-bottom: 1px solid var(--border); }
+    .mobile-nav a.active { color: var(--primary); font-weight: 700; }
+    .mobile-nav .mob-cta { margin-top: 8px; display: flex; gap: 10px; }
+
+    /* ---- PAGE HERO (Identical to Contact page) ---- */
+    .page-hero {
+      padding: 130px 1.5rem 80px;
+      background: linear-gradient(135deg, #0c1a2e 0%, #1e3a5f 45%, #0d4f4a 100%);
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .page-hero::before {
+      content: ''; position: absolute; top: -40%; right: -10%; width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(249,115,22,0.15) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .page-hero-inner { position: relative; z-index: 2; }
+    .page-badge {
+      display: inline-block; background: rgba(249,115,22,0.15);
+      border: 1px solid rgba(249,115,22,0.3); color: #fb923c;
+      padding: 5px 16px; border-radius: 30px; font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase; margin-bottom: 1.2rem;
+    }
+    .page-hero h1 { font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 800; color: white; letter-spacing: -0.3px; }
+    .page-hero h1 span { color: var(--primary); }
+    .page-hero p { color: #94a3b8; font-size: 1.05rem; max-width: 640px; margin: 1rem auto 0; }
+
+    /* ---- STATS STRIP ---- */
+    .stats-strip {
+      background: white; border-bottom: 1px solid var(--border); padding: 2rem 1.5rem;
+    }
+    .stats-strip-inner {
+      max-width: 1200px; margin: auto;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; text-align: center;
+    }
+    .stat-box .stat-num {
+      font-size: 2.2rem; font-weight: 800; color: var(--dark); line-height: 1.1;
+    }
+    .stat-box .stat-num span { color: var(--primary); }
+    .stat-box .stat-label {
+      font-size: 0.82rem; font-weight: 600; color: var(--text-muted); margin-top: 4px;
+    }
+
+    /* ---- MAIN WRAPPER ---- */
+    .main-wrap { max-width: 1200px; margin: auto; padding: 80px 1.5rem; }
+
+    .section-tag {
+      display: inline-block; background: var(--primary-light); color: var(--primary);
+      padding: 5px 16px; border-radius: 20px; font-size: 0.75rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.8rem;
+    }
+    .section-tag.teal { background: var(--secondary-light); color: var(--secondary); }
+    .section-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.4rem); font-weight: 800;
+      color: var(--dark); letter-spacing: -0.3px; line-height: 1.25; margin-bottom: 0.8rem;
+    }
+    .section-desc {
+      color: var(--text-muted); font-size: 1rem; line-height: 1.7; max-width: 640px; margin-bottom: 2.5rem;
+    }
+
+    /* ---- CONCEPT FLOW SECTION ---- */
+    .concept-grid {
+      display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 48px; align-items: center; margin-bottom: 80px;
+    }
+    .concept-text h3 {
+      font-size: 1.35rem; font-weight: 800; color: var(--dark); margin-bottom: 1rem;
+    }
+    .concept-text p {
+      color: var(--text-muted); font-size: 0.95rem; line-height: 1.8; margin-bottom: 1.2rem;
+    }
+    .flow-box-wrap {
+      background: white; border: 1.5px solid var(--border); border-radius: 24px;
+      padding: 2.5rem; box-shadow: 0 16px 40px rgba(12,26,46,0.06);
+    }
+    .flow-box-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--secondary-light); color: var(--secondary);
+      padding: 6px 14px; border-radius: 30px; font-size: 0.75rem; font-weight: 700; margin-bottom: 1.2rem;
+    }
+    .flow-list { display: flex; flex-direction: column; gap: 12px; margin-top: 1.2rem; }
+    .flow-item {
+      display: flex; align-items: center; gap: 14px;
+      background: var(--bg); border: 1.5px solid var(--border); border-radius: 14px;
+      padding: 12px 16px; transition: all 0.2s;
+    }
+    .flow-item:hover { border-color: var(--primary); background: var(--primary-light); transform: translateX(4px); }
+    .flow-num {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: var(--primary); color: white;
+      font-size: 0.8rem; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .flow-info h5 { font-size: 0.85rem; font-weight: 700; color: var(--dark); }
+    .flow-info p { font-size: 0.75rem; color: var(--text-muted); }
+
+    /* ---- PROBLEM VS SOLUTION ---- */
+    .compare-section {
+      background: white; border: 1.5px solid var(--border); border-radius: 28px;
+      padding: 3.5rem; margin-bottom: 80px; box-shadow: 0 10px 30px rgba(12,26,46,0.03);
+    }
+    .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+    .compare-col { border-radius: 20px; padding: 2rem; }
+    .compare-col.problem { background: #fef2f2; border: 1.5px solid #fee2e2; }
+    .compare-col.solution { background: #f0fdfa; border: 1.5px solid #ccfbf1; }
+    .compare-header { display: flex; align-items: center; gap: 12px; margin-bottom: 1.4rem; }
+    .compare-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+    }
+    .problem .compare-icon { background: #fee2e2; color: #dc2626; }
+    .solution .compare-icon { background: #ccfbf1; color: var(--secondary); }
+    .compare-header h3 { font-size: 1.15rem; font-weight: 800; }
+    .problem .compare-header h3 { color: #991b1b; }
+    .solution .compare-header h3 { color: #0f766e; }
+    .compare-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .compare-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.88rem; line-height: 1.5; }
+    .problem .compare-list li { color: #7f1d1d; }
+    .problem .compare-list li i { color: #dc2626; margin-top: 3px; }
+    .solution .compare-list li { color: #134e4a; font-weight: 500; }
+    .solution .compare-list li i { color: var(--secondary); margin-top: 3px; }
+
+    /* ---- 3 MODULES ---- */
+    .modules-section { margin-bottom: 80px; }
+    .modules-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .module-card {
+      background: white; border: 1.5px solid var(--border); border-radius: 24px;
+      padding: 2.2rem; transition: all 0.3s; display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .module-card:hover { border-color: var(--primary); transform: translateY(-5px); box-shadow: 0 20px 40px rgba(249,115,22,0.12); }
+    .module-badge {
+      display: inline-block; font-size: 0.72rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 1px; padding: 4px 12px; border-radius: 20px; margin-bottom: 1rem;
+    }
+    .mod-user .module-badge { background: var(--primary-light); color: var(--primary); }
+    .mod-worker .module-badge { background: var(--secondary-light); color: var(--secondary); }
+    .mod-admin .module-badge { background: #f1f5f9; color: var(--dark); }
+    .module-card .mod-icon {
+      width: 54px; height: 54px; border-radius: 14px; margin-bottom: 1.2rem;
+      display: flex; align-items: center; justify-content: center; font-size: 1.3rem;
+    }
+    .mod-user .mod-icon { background: linear-gradient(135deg, var(--primary-light), #ffe0cc); color: var(--primary); }
+    .mod-worker .mod-icon { background: linear-gradient(135deg, var(--secondary-light), #99f6e4); color: var(--secondary); }
+    .mod-admin .mod-icon { background: linear-gradient(135deg, #1e293b, var(--dark)); color: #f8fafc; }
+    .module-card h3 { font-size: 1.2rem; font-weight: 800; color: var(--dark); margin-bottom: 0.6rem; }
+    .module-card p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 1.4rem; }
+    .module-checklist { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-top: auto; }
+    .module-checklist li { font-size: 0.82rem; color: var(--dark-2); display: flex; align-items: center; gap: 8px; }
+    .module-checklist li i { font-size: 12px; }
+    .mod-user .module-checklist li i { color: var(--primary); }
+    .mod-worker .module-checklist li i { color: var(--secondary); }
+    .mod-admin .module-checklist li i { color: var(--dark); }
+
+    /* ---- 11 CATEGORIES GRID ---- */
+    .cat-section { margin-bottom: 80px; }
+    .cat-cards-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px;
+    }
+    .cat-box {
+      background: white; border: 1.5px solid var(--border); border-radius: 18px;
+      padding: 1.4rem; display: flex; align-items: flex-start; gap: 14px; transition: all 0.25s ease;
+    }
+    .cat-box:hover {
+      border-color: var(--primary); background: var(--primary-light);
+      transform: translateY(-3px); box-shadow: 0 10px 24px rgba(249,115,22,0.1);
+    }
+    .cat-box-icon {
+      width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0;
+      background: var(--primary-light); color: var(--primary);
+      display: flex; align-items: center; justify-content: center; font-size: 1.15rem; transition: all 0.25s;
+    }
+    .cat-box:hover .cat-box-icon { background: var(--primary); color: white; }
+    .cat-box-info h4 { font-size: 0.92rem; font-weight: 800; color: var(--dark); margin-bottom: 3px; }
+    .cat-box-info p { font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; }
+
+    /* ---- VALUES ---- */
+    .values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 80px; }
+    .val-card {
+      background: white; border: 1.5px solid var(--border); border-radius: 22px;
+      padding: 2rem; transition: all 0.25s;
+    }
+    .val-card:hover { border-color: var(--secondary); box-shadow: 0 14px 30px rgba(13,148,136,0.1); transform: translateY(-4px); }
+    .val-icon {
+      width: 50px; height: 50px; border-radius: 14px;
+      background: var(--secondary-light); color: var(--secondary);
+      display: flex; align-items: center; justify-content: center; font-size: 1.25rem; margin-bottom: 1.2rem;
+    }
+    .val-card h4 { font-size: 1.05rem; font-weight: 800; color: var(--dark); margin-bottom: 0.5rem; }
+    .val-card p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.65; }
+
+    /* ---- TECH HIGHLIGHTS ---- */
+    .tech-box {
+      background: linear-gradient(135deg, #0c1a2e 0%, #1e3a5f 100%);
+      border-radius: 28px; padding: 3.5rem; color: white; margin-bottom: 80px;
+    }
+    .tech-box h2 { font-size: clamp(1.8rem, 3.5vw, 2.3rem); font-weight: 800; margin-bottom: 0.7rem; }
+    .tech-box p { color: #94a3b8; font-size: 0.95rem; max-width: 600px; margin-bottom: 2.5rem; }
+    .tech-pills { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+    .tech-pill {
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 14px; padding: 14px 18px; display: flex; align-items: center; gap: 12px;
+      transition: all 0.2s;
+    }
+    .tech-pill:hover { background: rgba(255,255,255,0.14); border-color: var(--primary); }
+    .tech-pill-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: rgba(249,115,22,0.25); color: #fb923c;
+      display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0;
+    }
+    .tech-pill h5 { font-size: 0.85rem; font-weight: 700; color: white; }
+    .tech-pill span { font-size: 0.72rem; color: #94a3b8; display: block; }
+
+    /* ---- CTA BANNER ---- */
+    .cta-banner {
+      background: linear-gradient(135deg, var(--dark) 0%, #1e3a5f 50%, #0d4f4a 100%);
+      border-radius: 28px; padding: 4rem 2rem; text-align: center; color: white;
+    }
+    .cta-banner h2 { font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 800; margin-bottom: 1rem; }
+    .cta-banner p { color: #94a3b8; font-size: 1.05rem; max-width: 620px; margin: 0 auto 2.5rem; }
+    .cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .cta-btn-primary {
+      padding: 14px 30px; border-radius: 12px; font-family: inherit; font-size: 0.95rem; font-weight: 700;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;
+      transition: all 0.2s; box-shadow: 0 8px 24px rgba(249,115,22,0.35);
+    }
+    .cta-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(249,115,22,0.5); }
+    .cta-btn-secondary {
+      padding: 14px 30px; border-radius: 12px; font-family: inherit; font-size: 0.95rem; font-weight: 700;
+      background: rgba(255,255,255,0.1); border: 2px solid rgba(255,255,255,0.25);
+      color: white; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s;
+    }
+    .cta-btn-secondary:hover { background: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.45); }
+
+    /* ---- FOOTER (Identical across Home, About, Contact) ---- */
+    footer {
+      background: var(--dark); color: #94a3b8; padding: 64px 1.5rem 28px; margin-top: 60px;
+    }
+    .footer-inner { max-width: 1200px; margin: auto; }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1.2fr; gap: 48px;
+      padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; }
+    .footer-logo .logo-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex; align-items: center; justify-content: center; color: white; font-size: 15px;
+    }
+    .footer-logo-title { font-size: 1.15rem; font-weight: 800; color: white; letter-spacing: -0.3px; line-height: 1.1; }
+    .footer-logo-sub { font-size: 0.65rem; font-weight: 700; color: #fb923c; text-transform: uppercase; letter-spacing: 1px; margin-top: 1px; }
+    .footer-desc { font-size: 0.85rem; line-height: 1.7; max-width: 280px; }
+    .footer-socials { display: flex; gap: 10px; margin-top: 1.2rem; }
+    .footer-social {
+      width: 36px; height: 36px; border-radius: 9px;
+      background: rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center;
+      color: #94a3b8; font-size: 14px; transition: all 0.2s;
+    }
+    .footer-social:hover { background: var(--primary); color: white; }
+    .footer-col h4 { font-size: 0.85rem; font-weight: 800; color: white; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.8px; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .footer-links a { font-size: 0.85rem; color: #94a3b8; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--primary); }
+    .footer-contact { display: flex; flex-direction: column; gap: 12px; }
+    .footer-contact-item { display: flex; align-items: flex-start; gap: 10px; font-size: 0.82rem; }
+    .footer-contact-icon { color: var(--primary); margin-top: 2px; width: 14px; flex-shrink: 0; }
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;
+      gap: 8px; padding-top: 28px; font-size: 0.8rem;
+    }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 1024px) {
+      .modules-grid { grid-template-columns: 1fr; }
+      .concept-grid { grid-template-columns: 1fr; }
+      .compare-grid { grid-template-columns: 1fr; }
+      .values-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    }
+    @media (max-width: 768px) {
+      /* Prevent horizontal shift and clipping from AOS on mobile/tablet */
+      [data-aos="fade-left"],
+      [data-aos="fade-right"] {
+        transform: translate3d(0, 16px, 0) !important;
+      }
+      [data-aos="fade-up"],
+      [data-aos="zoom-in"] {
+        transform: translate3d(0, 16px, 0) !important;
+      }
+      [data-aos].aos-animate {
+        transform: translate3d(0, 0, 0) !important;
+        opacity: 1 !important;
+      }
+
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: block; }
+      .stats-strip { padding: 1.5rem 1rem; }
+      .stats-strip-inner { grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
+      .stat-box .stat-num { font-size: 1.75rem; }
+      .main-wrap { padding: 40px 1rem; }
+      .concept-grid { gap: 28px; margin-bottom: 50px; }
+      .flow-box-wrap { padding: 1.5rem 1rem; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .compare-section { padding: 2rem 1.2rem; margin-bottom: 50px; }
+      .cat-section { margin-bottom: 50px; }
+      .values-grid { gap: 16px; margin-bottom: 50px; }
+      .val-card { padding: 1.5rem; }
+      .tech-box { padding: 2rem 1.2rem; margin-bottom: 50px; }
+      .cta-banner { padding: 2.5rem 1.2rem; }
+      .cta-actions { flex-direction: column; align-items: stretch; max-width: 380px; margin: 0 auto; }
+      .cta-btn-primary, .cta-btn-secondary { width: 100%; justify-content: center; text-align: center; }
+    }
+    @media (max-width: 440px) {
+      .stats-strip-inner { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+      .stat-box .stat-num { font-size: 1.45rem; }
+    }
   </style>
 </head>
-
 <body>
-  <header>
-    <nav>
-      <div class="main-nav">
-        <a href="#" class="navbar-logo">
-          <img src="./assets/images/header logo.png" alt="company logo">
+
+<!-- NAVBAR (Identical across Home, About, Contact) -->
+<nav>
+  <div class="nav-inner">
+    <a href="home.html" class="nav-logo">
+      <img src="assets/logo.png" alt="Work Connect Logo" style="height:44px;width:44px;object-fit:contain;border-radius:10px;" />
+      <div class="nav-logo-text">
+        <span class="nav-logo-title">Work Connect</span>
+        <span class="nav-logo-sub">Worker Job Portal</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="home.html">Home</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="login.php" class="btn-outline">Sign In</a>
+      <a href="login.php" class="btn-primary">Get Started</a>
+    </div>
+    <button class="hamburger" onclick="toggleMobileNav()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE NAV (Identical across Home, About, Contact) -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="home.html">Home</a>
+  <a href="about.html" class="active">About</a>
+  <a href="contact.html">Contact</a>
+  <div class="mob-cta">
+    <a href="login.php" class="btn-outline" style="flex:1;text-align:center;">Sign In</a>
+    <a href="login.php" class="btn-primary" style="flex:1;text-align:center;">Register</a>
+  </div>
+</div>
+
+<!-- PAGE HERO (Identical to Contact page) -->
+<header class="page-hero">
+  <div class="page-hero-inner">
+    <span class="page-badge" data-aos="fade-down"><i class="fas fa-info-circle"></i> About Us</span>
+    <h1 data-aos="fade-up" data-aos-delay="100">About <span>Work Connect</span></h1>
+    <p data-aos="fade-up" data-aos-delay="200">A specialized Worker Job Portal connecting everyday people with verified, skilled trade professionals across your community.</p>
+  </div>
+</header>
+
+<!-- STATS STRIP -->
+<section class="stats-strip">
+  <div class="stats-strip-inner">
+    <div class="stat-box" data-aos="zoom-in" data-aos-delay="0">
+      <div class="stat-num">11<span>+</span></div>
+      <div class="stat-label">Trade Categories</div>
+    </div>
+    <div class="stat-box" data-aos="zoom-in" data-aos-delay="100">
+      <div class="stat-num">500<span>+</span></div>
+      <div class="stat-label">Verified Skilled Workers</div>
+    </div>
+    <div class="stat-box" data-aos="zoom-in" data-aos-delay="200">
+      <div class="stat-num">0<span>%</span></div>
+      <div class="stat-label">Middleman Commission</div>
+    </div>
+    <div class="stat-box" data-aos="zoom-in" data-aos-delay="300">
+      <div class="stat-num">100<span>%</span></div>
+      <div class="stat-label">Direct Communication</div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN CONTENT -->
+<main class="main-wrap">
+
+  <!-- CONCEPT FLOW -->
+  <section class="concept-grid">
+    <div class="concept-text" data-aos="fade-right">
+      <span class="section-tag">Our Mission & Purpose</span>
+      <h2 class="section-title">Bridging People & Skilled Workers</h2>
+      <p>In our daily lives, urgent domestic needs arise constantly — a sudden pipe burst in the bathroom, a faulty electrical switchboard, doors needing urgent woodwork repair, or walls requiring a fresh coat of paint. Finding honest, skilled, and available workers is traditionally difficult and unorganized.</p>
+      <p>Similarly, thousands of skilled labourers (plumbers, carpenters, electricians, mechanics, painters) struggle to find continuous daily work without paying heavy agent commissions. <strong>Work Connect</strong> solves both sides of this equation with one direct digital platform.</p>
+      <div style="margin-top:1.5rem; display:flex; gap:12px; flex-wrap:wrap;">
+        <a href="login.php" class="btn-primary" style="display:inline-flex; align-items:center; gap:8px;">
+          <i class="fas fa-search"></i> Search Available Workers
         </a>
-        <div class="navbar-content" id="navbar-content">
-          <ul>
-            <li><a href="home.html" class="hover-link">Home</a></li>
-            <li><a href="about.html" class="hover-link">About</a></li>
-            <li><a href="contact.html" class="hover-link">Contact</a></li>
-            <li class="ham-hidden"><a href="login.php" class="ham-responsive">Login</a></li>
-          </ul>
+        <a href="contact.html" class="btn-outline">
+          Get in Touch
+        </a>
+      </div>
+    </div>
+
+    <!-- The 4-Step Architecture Flow -->
+    <div class="flow-box-wrap" data-aos="fade-left">
+      <span class="flow-box-badge"><i class="fas fa-diagram-project"></i> Architectural Flow</span>
+      <h3 style="font-size:1.25rem; font-weight:800; color:var(--dark);">The Core Synopsis Concept</h3>
+      <p style="font-size:0.85rem; color:var(--text-muted); margin-top:4px;">How clients and workers connect seamlessly in 4 simple stages:</p>
+      
+      <div class="flow-list">
+        <div class="flow-item" data-aos="fade-up" data-aos-delay="0">
+          <div class="flow-num">1</div>
+          <div class="flow-info">
+            <h5>Person Who Needs a Worker</h5>
+            <p>Client identifies required work (e.g. plumbing leak, house painting, AC servicing).</p>
+          </div>
         </div>
-        <div class="btn-ham">
-          <a href="login.php" class="ham-responsive">Login</a>
-          <a href="#" class="nav-toggle menu-hover" id="nav-toggle">
-            <i class="fa-solid fa-bars" style="color: #000000;"></i>
-          </a>
+        <div class="flow-item" data-aos="fade-up" data-aos-delay="100">
+          <div class="flow-num">2</div>
+          <div class="flow-info">
+            <h5>Search & Filter Workers</h5>
+            <p>Filter by trade category, city/location, experience years, and live availability.</p>
+          </div>
+        </div>
+        <div class="flow-item" data-aos="fade-up" data-aos-delay="200">
+          <div class="flow-num">3</div>
+          <div class="flow-info">
+            <h5>View Detailed Worker Profile</h5>
+            <p>Inspect portfolio, skill badges, daily/hourly rates, rating, and verified contact info.</p>
+          </div>
+        </div>
+        <div class="flow-item" data-aos="fade-up" data-aos-delay="300">
+          <div class="flow-num">4</div>
+          <div class="flow-info">
+            <h5>Direct Contact / Hire Worker</h5>
+            <p>Send direct work request with scheduled date and budget, then coordinate via live chat.</p>
+          </div>
         </div>
       </div>
-    </nav>
-  </header>
+    </div>
+  </section>
 
-  <section>
-    <div class="about-img">
-      <div class="about-shadow"></div>
-      <div class="about-content">
-        <span>About Us</span>
+  <!-- TRADITIONAL VS WORK CONNECT -->
+  <section class="compare-section">
+    <div style="text-align:center; margin-bottom:2.5rem;" data-aos="fade-up">
+      <span class="section-tag teal">Comparative Analysis</span>
+      <h2 class="section-title">Why Work Connect is Better</h2>
+      <p class="section-desc" style="margin:0 auto;">A modern digital alternative to the unorganized traditional labour market.</p>
+    </div>
+    
+    <div class="compare-grid">
+      <!-- Old System -->
+      <div class="compare-col problem" data-aos="fade-right">
+        <div class="compare-header">
+          <div class="compare-icon"><i class="fas fa-times-circle"></i></div>
+          <h3>Traditional Unorganized Method</h3>
+        </div>
+        <ul class="compare-list">
+          <li><i class="fas fa-xmark"></i> Inconvenient manual search through word-of-mouth or roadside physical labour corners.</li>
+          <li><i class="fas fa-xmark"></i> No way to verify a worker's past experience, skills, or reliability beforehand.</li>
+          <li><i class="fas fa-xmark"></i> Unclear and fluctuating pricing with unexpected last-minute fee demands.</li>
+          <li><i class="fas fa-xmark"></i> High dependency on middlemen and local contractors who take large commission cuts.</li>
+          <li><i class="fas fa-xmark"></i> Uncertainty regarding availability; long waiting times for urgent fixes.</li>
+        </ul>
+      </div>
+
+      <!-- New System -->
+      <div class="compare-col solution" data-aos="fade-left">
+        <div class="compare-header">
+          <div class="compare-icon"><i class="fas fa-check-circle"></i></div>
+          <h3>Work Connect Digital Portal</h3>
+        </div>
+        <ul class="compare-list">
+          <li><i class="fas fa-check"></i> Instant digital search filterable by trade, exact city area, and skills.</li>
+          <li><i class="fas fa-check"></i> Transparent profiles detailing years of experience, trade bio, and client ratings.</li>
+          <li><i class="fas fa-check"></i> Upfront daily and hourly rate cards with clear work request budgets.</li>
+          <li><i class="fas fa-check"></i> 100% direct client-to-worker connection with zero middleman commission fees.</li>
+          <li><i class="fas fa-check"></i> Real-time availability indicator (Available / Busy) and instant live messaging.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- THREE CORE MODULES -->
+  <section class="modules-section">
+    <div style="text-align:center;" data-aos="fade-up">
+      <span class="section-tag">System Architecture</span>
+      <h2 class="section-title">The Three Integrated Modules</h2>
+      <p class="section-desc" style="margin:0 auto 2.5rem;">Designed specifically to meet the functional requirements outlined in the project synopsis.</p>
+    </div>
+
+    <div class="modules-grid">
+      <!-- User Module -->
+      <div class="module-card mod-user" data-aos="fade-up" data-aos-delay="0">
         <div>
-          <p>Smart Labouring System is a digital platform connecting labourers and employers
-            , simplifying job search, hiring, communication, and labour management through
-            secure, transparent, and efficient technology-driven solutions.</p>
+          <span class="module-badge">Client Portal</span>
+          <div class="mod-icon"><i class="fas fa-user-tie"></i></div>
+          <h3>User Module</h3>
+          <p>For individuals, families, and businesses who need reliable skilled workers for household or commercial tasks.</p>
+        </div>
+        <ul class="module-checklist">
+          <li><i class="fas fa-check-circle"></i> Category-based worker directory</li>
+          <li><i class="fas fa-check-circle"></i> Real-time search by city and trade</li>
+          <li><i class="fas fa-check-circle"></i> Full worker profile & rate viewer</li>
+          <li><i class="fas fa-check-circle"></i> Direct work request submission</li>
+          <li><i class="fas fa-check-circle"></i> 1-on-1 real-time messaging with workers</li>
+          <li><i class="fas fa-check-circle"></i> Live tracking of pending/accepted requests</li>
+        </ul>
+      </div>
+
+      <!-- Worker Module -->
+      <div class="module-card mod-worker" data-aos="fade-up" data-aos-delay="100">
+        <div>
+          <span class="module-badge">Labourer Portal</span>
+          <div class="mod-icon"><i class="fas fa-hard-hat"></i></div>
+          <h3>Worker Module</h3>
+          <p>For skilled and independent labourers seeking consistent job opportunities, transparent pay, and direct contact.</p>
+        </div>
+        <ul class="module-checklist">
+          <li><i class="fas fa-check-circle"></i> Custom trade profile management</li>
+          <li><i class="fas fa-check-circle"></i> Daily and hourly rate configuration</li>
+          <li><i class="fas fa-check-circle"></i> 1-Click live availability toggle (Available / Busy)</li>
+          <li><i class="fas fa-check-circle"></i> Accept, decline, or complete work requests</li>
+          <li><i class="fas fa-check-circle"></i> Real-time client chat coordination</li>
+          <li><i class="fas fa-check-circle"></i> Build trusted public reputation & rating</li>
+        </ul>
+      </div>
+
+      <!-- Admin Module -->
+      <div class="module-card mod-admin" data-aos="fade-up" data-aos-delay="200">
+        <div>
+          <span class="module-badge">Administration</span>
+          <div class="mod-icon"><i class="fas fa-shield-halved"></i></div>
+          <h3>Admin Module</h3>
+          <p>Centralized control center ensuring platform integrity, user verification, category management, and request oversight.</p>
+        </div>
+        <ul class="module-checklist">
+          <li><i class="fas fa-check-circle"></i> System-wide overview and analytics</li>
+          <li><i class="fas fa-check-circle"></i> Trade category management (add/delete/edit)</li>
+          <li><i class="fas fa-check-circle"></i> Client account supervision & moderation</li>
+          <li><i class="fas fa-check-circle"></i> Worker profile verification & moderation</li>
+          <li><i class="fas fa-check-circle"></i> Work request audit and dispute records</li>
+          <li><i class="fas fa-check-circle"></i> Public contact form inquiry management</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 TRADE CATEGORIES -->
+  <section class="cat-section">
+    <div data-aos="fade-up">
+      <span class="section-tag teal">Supported Trades</span>
+      <h2 class="section-title">11 Trade Categories We Support</h2>
+      <p class="section-desc">From emergency home maintenance to complete property renovation, find trusted specialists across all core trades.</p>
+    </div>
+
+    <div class="cat-cards-grid">
+      <div class="cat-box">
+        <div class="cat-box-icon"><i class="fas fa-faucet-drip"></i></div>
+        <div class="cat-box-info">
+          <h4>Plumber</h4>
+          <p>Water pipe fitting, leak repair, bathroom sanitary installations, and water tank maintenance.</p>
+        </div>
+      </div>
+      <div class="cat-box">
+        <div class="cat-box-icon"><i class="fas fa-bolt"></i></div>
+        <div class="cat-box-info">
+          <h4>Electrician</h4>
+          <p>Wiring, fuse repairs, inverter setup, ceiling fan fitting, and home switchboard repairs.</p>
+        </div>
+      </div>
+      <div class="cat-box">
+        <div class="cat-box-icon"><i class="fas fa-hammer"></i></div>
+        <div class="cat-box-info">
+          <h4>Carpenter</h4>
+          <p>Furniture crafting, modular cabinets, wooden door and window framing, and lock replacement.</p>
+        </div>
+      </div>
+      <div class="cat-box">
+        <div class="cat-box-icon"><i class="fas fa-paint-roller"></i></div>
+        <div class="cat-box-info">
+          <h4>Painter</h4>
+          <p>Interior/exterior painting, wall putty, waterproofing, textures, and woodwork polish.</p>
+        </div>
+      </div>
+      <div class="cat-box">
+        <div class="cat-box-icon"><i class="fas fa-trowel-bricks"></i></div>
+        <div class="cat-box-info">
+          <h4>Construction Worker</h4>
+          <p>Masonry, structural bricklaying, wall plastering, cement mixing, and tile alignment.</p>
+        </div>
+      </div>
+      <div class="cat-box">
+        <div class="cat-box-icon"><i class="fas fa-wrench"></i></div>
+        <div class="cat-box-info">
+          <h4>Technician</h4>
+          <p>Split AC servicing, chemical jet wash, refrigerator cooling repairs, and washing machine fix.</p>
+        </div>
+      </div>
+      <div class="cat-box">
+        <div class="cat-box-icon"><i class="fas fa-broom"></i></div>
+        <div class="cat-box-info">
+          <h4>Cleaner</h4>
+          <p>Deep bathroom sanitation, kitchen degreasing, sofa shampooing, and post-renovation cleanup.</p>
+        </div>
+      </div>
+      <div class="cat-box">
+        <div class="cat-box-icon"><i class="fas fa-id-card"></i></div>
+        <div class="cat-box-info">
+          <h4>Driver</h4>
+          <p>Personal chauffeurs, commercial vehicle operators, highway trips, and city driving.</p>
+        </div>
+      </div>
+      <div class="cat-box">
+        <div class="cat-box-icon"><i class="fas fa-gears"></i></div>
+        <div class="cat-box-info">
+          <h4>Mechanic</h4>
+          <p>Two-wheeler and four-wheeler vehicle servicing, engine tune-up, brake repair, and diagnostics.</p>
+        </div>
+      </div>
+      <div class="cat-box">
+        <div class="cat-box-icon"><i class="fas fa-seedling"></i></div>
+        <div class="cat-box-info">
+          <h4>Gardener</h4>
+          <p>Lawn mowing, seasonal trimming, plant repotting, terrace garden setup, and fertilizing.</p>
+        </div>
+      </div>
+      <div class="cat-box">
+        <div class="cat-box-icon"><i class="fas fa-utensils"></i></div>
+        <div class="cat-box-info">
+          <h4>Cook</h4>
+          <p>Nutritious daily home meals, customized thali preparation, party snacks, and small catering.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section>
-    <div class="story-container">
-      <div class="story-header">Our Story For Creating This Website</div>
-      <div class="story-content">
-        <div class="story-img">
-          <img src="./assets/images/story-image.png" alt="story image">
+  <!-- VALUES & GUIDING PRINCIPLES -->
+  <section class="values-grid">
+    <div class="val-card" data-aos="fade-up" data-aos-delay="0">
+      <div class="val-icon"><i class="fas fa-hand-holding-dollar"></i></div>
+      <h4>Fair & Transparent Pay</h4>
+      <p>Workers set their own realistic daily or hourly rates. Clients negotiate with clarity, ensuring zero exploitative commission deductions.</p>
+    </div>
+    <div class="val-card" data-aos="fade-up" data-aos-delay="100">
+      <div class="val-icon"><i class="fas fa-user-shield"></i></div>
+      <h4>Trust & Reputation</h4>
+      <p>Authentic worker profiles with transparent work history, verified trade skills, and real client reviews establish true trustworthiness.</p>
+    </div>
+    <div class="val-card" data-aos="fade-up" data-aos-delay="200">
+      <div class="val-icon"><i class="fas fa-bolt-lightning"></i></div>
+      <h4>Speed & Efficiency</h4>
+      <p>Find nearby available workers in minutes instead of days. Direct communication via real-time SSE chat enables immediate coordination.</p>
+    </div>
+  </section>
+
+  <!-- TECH STACK BOX -->
+  <section class="tech-box" data-aos="zoom-in">
+    <h2>Built with Robust Web Technologies</h2>
+    <p>Work Connect is engineered for performance, lightweight footprint, and reliable real-time communication.</p>
+    
+    <div class="tech-pills">
+      <div class="tech-pill">
+        <div class="tech-pill-icon"><i class="fab fa-php"></i></div>
+        <div>
+          <h5>PHP 8.x Backend</h5>
+          <span>Modular MVC & OOP Architecture</span>
         </div>
-        <div class="story">
-          <p>The idea for creating this website was born from the real-life difficulties faced by both workers and
-            employers in finding suitable job opportunities. Many workers spend long hours searching for work, often
-            relying on word of mouth or middlemen, which leads to wasted time, uncertainty, and missed opportunities. At
-            the same time, employers struggle to find skilled and reliable workers when they need them, causing delays
-            and increased costs.</p>
-          <p>To address these challenges, the Smart Labouring System was developed as a digital solution that connects
-            workers and employers on a single platform. This website allows workers to easily search for jobs based on
-            their skills and location, while employers can quickly find and hire suitable labourers. The platform
-            reduces dependency on traditional methods and eliminates unnecessary intermediaries.</p>
-          <p>By providing direct communication, transparent processes, and easy access to job information, this website
-            aims to save time, reduce effort, and improve trust between both parties. The Smart Labouring System is
-            driven by the goal of creating fair employment opportunities, simplifying labour management, and
-            contributing to social and economic development through the use of modern technology.</p>
+      </div>
+      <div class="tech-pill">
+        <div class="tech-pill-icon"><i class="fas fa-database"></i></div>
+        <div>
+          <h5>MySQL / MariaDB</h5>
+          <span>PDO with Prepared Statements</span>
+        </div>
+      </div>
+      <div class="tech-pill">
+        <div class="tech-pill-icon"><i class="fas fa-bolt"></i></div>
+        <div>
+          <h5>Server-Sent Events (SSE)</h5>
+          <span>Real-time Instant 1-on-1 Chat</span>
+        </div>
+      </div>
+      <div class="tech-pill">
+        <div class="tech-pill-icon"><i class="fas fa-lock"></i></div>
+        <div>
+          <h5>Bcrypt & CSRF Security</h5>
+          <span>Secure Authentication & Tokens</span>
+        </div>
+      </div>
+      <div class="tech-pill">
+        <div class="tech-pill-icon"><i class="fab fa-css3-alt"></i></div>
+        <div>
+          <h5>Tailwind CSS & Plus Jakarta</h5>
+          <span>Modern Responsive Typography</span>
+        </div>
+      </div>
+      <div class="tech-pill">
+        <div class="tech-pill-icon"><i class="fab fa-font-awesome"></i></div>
+        <div>
+          <h5>Font Awesome 6</h5>
+          <span>Vector Scalable Icon System</span>
         </div>
       </div>
     </div>
   </section>
 
-  <section>
-    <div class="frame-header">Think About The Future</div>
-    <div class="frame">
-      <div class="frame-box">
-        <div class="frame-icon"><img src="./assets/images/goal.png" alt="service image"></div>
-        <div class="frame-sec">
-          <span>Goal</span>
-          <p>The goal of the Smart Labouring System is to connect labourers and employers digitally, simplify hiring and
-            job searching, reduce time and cost, ensure transparency, and improve workforce management through reliable
-            technology.</p>
-        </div>
-      </div>
-      <div class="frame-box">
-        <div class="frame-icon"><img src="./assets/images/vision.png" alt="service image"></div>
-        <div class="frame-sec">
-          <span>Vision</span>
-          <p>The vision of the Smart Labouring System is to create a trusted digital platform that empowers labourers,
-            simplifies hiring for employers, promotes fair employment, and supports sustainable economic and social
-            development.</p>
-        </div>
-      </div>
-      <div class="frame-box">
-        <div class="frame-icon"><img src="./assets/images/strategy.png" alt="service image"></div>
-        <div class="frame-sec">
-          <span>Strategy</span>
-          <p>The strategy of the Smart Labouring System focuses on leveraging digital technology to connect labourers
-            and employers efficiently, improve accessibility, ensure data security, enhance user experience, and
-            continuously upgrade features for reliable labour management.</p>
-        </div>
-      </div>
-      <div class="frame-box">
-        <div class="frame-icon"><img src="./assets/images/policy.png" alt="service image"></div>
-        <div class="frame-sec">
-          <span>Quality Policy</span>
-          <p>The Quality Policy of the Smart Labouring System commits to delivering a secure, reliable, and
-            user-friendly platform, ensuring data accuracy, transparency, continuous improvement, and high service
-            standards to achieve complete user satisfaction.</p>
-        </div>
-      </div>
+  <!-- CTA BANNER -->
+  <section class="cta-banner">
+    <h2>Ready to Experience Work Connect?</h2>
+    <p>Join our growing community today. Find skilled workers near you in minutes or offer your trade services directly.</p>
+    <div class="cta-actions">
+      <a href="login.php" class="cta-btn-primary"><i class="fas fa-user-plus"></i> Join as a Client</a>
+      <a href="login.php" class="cta-btn-secondary"><i class="fas fa-hard-hat"></i> Register as a Worker</a>
     </div>
   </section>
 
-  <footer>
-    <div class="footer-Service">
+</main>
 
-      <div class="First-box">
+<!-- FOOTER (Identical across Home, About, Contact) -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
         <div class="footer-logo">
-          <img src="./assets/images/header logo.png" alt="footer logo">
+          <div style="background:#fff;border-radius:10px;padding:4px;display:flex;align-items:center;justify-content:center;width:48px;height:48px;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,0.18);">
+            <img src="assets/logo.png" alt="Work Connect Logo" style="height:38px;width:38px;object-fit:contain;" />
+          </div>
+          <div class="nav-logo-text">
+            <span class="footer-logo-title">Work Connect</span>
+            <span class="footer-logo-sub">Worker Job Portal</span>
+          </div>
         </div>
-        <div class="footer-paragraph">
-          <p>Smart Labouring System is a digital platform connecting labourers and employers, enabling fast hiring, easy
-            job search, direct communication, and efficient workforce management.</p>
-        </div>
-      </div>
-
-      <div class="Second-box">
-        <div class="footer-header">Quick Links</div>
-        <div class="Quick-Link">
-          <span><img src="./assets/images/home.png" alt="home icon"><a href="home.html">Home</a></span>
-          <span><img src="./assets/images/about.png" alt="about icon"><a href="about.html">About</a></span>
-          <span><img src="./assets/images/jobs.png" alt="jobs icon"><a href="#">Jobs</a></span>
-          <span><img src="./assets/images/contact.png" alt="contact icon"><a href="contact.html">Contact</a></span>
-        </div>
-      </div>
-
-      <div class="Third-box">
-        <div class="footer-header">Contact Details</div>
-        <div class="Contact-footer">
-          <span><img src="./assets/images/phone.png" alt="phone icon">+91 9503690491</span>
-          <span><img src="./assets/images/email.png" alt="email icon">amitvishwakarma3939@gmail.com</span>
-          <span><img src="./assets/images/location.png" alt="location icon">Room No.402, 2nd Floor, Mehta Chembur
-            bulding, Nallasopara (East), Maharashtra, India</span>
+        <p class="footer-desc">Work Connect is a digital platform connecting people who need skilled workers with reliable professionals for plumbing, electrical, carpentry, cleaning, and more.</p>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/" target="_blank" class="footer-social"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.facebook.com/" target="_blank" class="footer-social"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://web.whatsapp.com/" target="_blank" class="footer-social"><i class="fab fa-whatsapp"></i></a>
+          <a href="https://in.linkedin.com/" target="_blank" class="footer-social"><i class="fab fa-linkedin-in"></i></a>
+          <a href="https://www.youtube.com/" target="_blank" class="footer-social"><i class="fab fa-youtube"></i></a>
         </div>
       </div>
-
-      <div class="Forth-box">
-        <div class="footer-header">Follow On Us</div>
-        <div class="Follow-icon">
-          <a href="https://www.youtube.com/" target="_blank"><i class="fa-brands fa-youtube fa-2xl"
-              style="color: #ffffff;"></i></a>
-          <a href="https://www.instagram.com/" target="_blank"><i class="fa-brands fa-instagram fa-2xl"
-              style="color: #ffffff;"></i></a>
-          <a href="https://www.facebook.com/" target="_blank"><i class="fa-brands fa-facebook fa-2xl"
-              style="color: #ffffff;"></i></a>
-          <a href="https://in.linkedin.com/" target="_blank"><i class="fa-brands fa-linkedin fa-2xl"
-              style="color: #ffffff;"></i></a>
-          <a href="https://web.whatsapp.com/" target="_blank"><i class="fa-brands fa-whatsapp fa-2xl"
-              style="color: #ffffff;"></i></a>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="home.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="login.php">Sign In</a></li>
+          <li><a href="login.php">Register</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Categories</h4>
+        <ul class="footer-links">
+          <li><a href="login.php">Plumber</a></li>
+          <li><a href="login.php">Electrician</a></li>
+          <li><a href="login.php">Carpenter</a></li>
+          <li><a href="login.php">Painter</a></li>
+          <li><a href="login.php">Technician</a></li>
+          <li><a href="login.php">Cook</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <div class="footer-contact">
+          <div class="footer-contact-item">
+            <i class="fas fa-phone footer-contact-icon"></i>
+            <span>+91 9503690491</span>
+          </div>
+          <div class="footer-contact-item">
+            <i class="fas fa-envelope footer-contact-icon"></i>
+            <span>amitvishwakarma3939@gmail.com</span>
+          </div>
+          <div class="footer-contact-item">
+            <i class="fas fa-location-dot footer-contact-icon"></i>
+            <span>Room 402, Mehta Chembur Building, Nallasopara (East), Maharashtra</span>
+          </div>
         </div>
       </div>
-
     </div>
+    <div class="footer-bottom">
+      <span>© 2026 Work Connect – Worker Job Portal. All Rights Reserved.</span>
+      <span>Made with <i class="fas fa-heart" style="color:var(--primary);"></i> in Maharashtra</span>
+    </div>
+  </div>
+</footer>
 
-    <div class="Copyright-content">© 2026 Smart Labouring System | All Rights Reserved</div>
-  </footer>
-
-  <script src="./assets/js/javascript.js"></script>
+<script>
+  function toggleMobileNav() {
+    document.getElementById('mobileNav').classList.toggle('open');
+  }
+  document.addEventListener('click', function(e) {
+    const nav = document.getElementById('mobileNav');
+    if (nav.classList.contains('open') && !nav.contains(e.target) && !e.target.closest('.hamburger')) {
+      nav.classList.remove('open');
+    }
+  });
+</script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({ duration: 600, once: true, offset: 30, easing: 'ease-out-cubic' });
+</script>
 </body>
-
 </html>

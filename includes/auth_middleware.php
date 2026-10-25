@@ -8,7 +8,6 @@ function appBaseUrl() {
     if ($base !== null) {
         return $base;
     }
-
     $project = basename(dirname(__DIR__));
     $base = '/' . $project;
     return $base;
@@ -23,10 +22,10 @@ function dashboardUrlByRole($role) {
     switch ($role) {
         case 'admin':
             return $base . '/admin/dashboard.php';
-        case 'employer':
-            return $base . '/employer/dashboard.php';
-        case 'employee':
-            return $base . '/employee/dashboard.php';
+        case 'user':
+            return $base . '/user/dashboard.php';
+        case 'worker':
+            return $base . '/worker/dashboard.php';
         default:
             return loginUrl();
     }
@@ -37,9 +36,9 @@ function checkRole($allowedRoles) {
         header("Location: " . loginUrl());
         exit();
     }
-
-    if (!in_array($_SESSION['role'], $allowedRoles, true)) {
-        header("Location: " . dashboardUrlByRole($_SESSION['role'] ?? ''));
+    $currentRole = $_SESSION['role'] ?? '';
+    if (!in_array($currentRole, $allowedRoles, true)) {
+        header("Location: " . dashboardUrlByRole($currentRole));
         exit();
     }
 }

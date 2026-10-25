@@ -6,12 +6,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username'] ?? '');
     $email = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
-    $role_name = $_POST['role'] ?? 'employee';
+    $raw_role = $_POST['role'] ?? 'user';
 
-    // Never trust role from client: only allow public self-registration roles.
-    $allowed_roles = ['employee', 'employer'];
-    if (!in_array($role_name, $allowed_roles, true)) {
-        $role_name = 'employee';
+    $allowed_roles = ['user', 'worker'];
+    if (!in_array($raw_role, $allowed_roles, true)) {
+        $raw_role = 'user';
     }
 
     if (!empty($username) && !empty($email) && !empty($password)) {
@@ -26,11 +25,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
         }
 
-        // Get role ID
         $stmt = $pdo->prepare("SELECT id FROM roles WHERE role_name = ?");
-        $stmt->execute([$role_name]);
+        $stmt->execute([$raw_role]);
         $role = $stmt->fetch();
-        
+
         if ($role) {
             $role_id = $role['id'];
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -38,19 +36,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
                 $stmt = $pdo->prepare("INSERT INTO users (username, email, password, role_id) VALUES (?, ?, ?, ?)");
                 $stmt->execute([$username, $email, $hashed_password, $role_id]);
-                
-                $_SESSION['success'] = "Registration successful! Please login.";
+                $newUserId = (int)$pdo->lastInsertId();
+
+                if ($raw_role === 'worker') {
+                    $category_id = !empty($_POST['category_id']) ? (int)$_POST['category_id'] : null;
+                    $location = trim($_POST['location'] ?? '');
+                    $phone = trim($_POST['phone'] ?? '');
+                    $skills = trim($_POST['skills'] ?? '');
+
+                    $stmtWk = $pdo->prepare("
+                        INSERT INTO worker_profiles (user_id, full_name, category_id, location, phone, skills, availability)
+                        VALUES (?, ?, ?, ?, ?, ?, 'available')
+                    ");
+                    $stmtWk->execute([$newUserId, $username, $category_id, $location, $phone, $skills]);
+                }
+
+                $_SESSION['success'] = "Registration successful! Please sign in with your credentials.";
                 header("Location: login.php");
                 exit();
             } catch (PDOException $e) {
-                // Do not leak SQL/internal details to users.
                 $_SESSION['error'] = "Registration failed. Username or email may already exist.";
             }
         } else {
-            $_SESSION['error'] = "Invalid role selected.";
+            $_SESSION['error'] = "Invalid role configuration.";
         }
     } else {
-        $_SESSION['error'] = "All fields are required.";
+        $_SESSION['error'] = "All required fields must be filled.";
     }
 }
 header("Location: login.php");

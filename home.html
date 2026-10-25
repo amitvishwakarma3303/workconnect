@@ -1,293 +1,701 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Work Connect - Smart Labouring System</title>
-  <link rel="stylesheet" href="./assets/css/style.css">
-  <link rel="stylesheet" href="./assets/css/media-queries.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-    integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <title>Work Connect - Find Skilled Workers Near You</title>
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
   <style>
     :root {
-      --brand-1: #1e3a8a;
-      --brand-2: #0ea5e9;
+      --primary: #f97316;
+      --primary-dark: #ea580c;
+      --primary-light: #fff7ed;
+      --secondary: #0d9488;
+      --secondary-dark: #0f766e;
+      --secondary-light: #f0fdfa;
+      --dark: #0c1a2e;
+      --dark-2: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
       --surface: #ffffff;
-      --text-main: #0f172a;
-      --text-muted: #475569;
-      --ring: rgba(14, 165, 233, 0.25);
+      --bg: #f8fafc;
     }
-    body { font-family: 'Manrope', sans-serif; color: var(--text-main); background: radial-gradient(circle at 10% 0%, #e0f2fe 0%, #f8fafc 40%, #f8fafc 100%); }
-    nav { background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(15,23,42,0.06); }
-    .hero-img { box-shadow: 0 25px 60px rgba(30,58,138,0.22); overflow: hidden; }
-    .hero-shadow { background: linear-gradient(115deg, rgba(2,6,23,0.7), rgba(30,58,138,0.55)); opacity: 1; }
-    .hero-content span { font-weight: 800; letter-spacing: -0.5px; }
-    .hero-content button, .content-choose button { background-image: linear-gradient(120deg, var(--brand-1), var(--brand-2)); border: none; box-shadow: 0 14px 28px rgba(14,165,233,0.3); }
-    .service-header, .header-contact, .story-header, .frame-header { letter-spacing: -0.6px; }
-    .box, .frame-box, .contact-service { border: 1px solid rgba(15,23,42,0.08); box-shadow: 0 12px 30px rgba(15,23,42,0.08); border-radius: 18px; transition: transform .2s ease, box-shadow .2s ease; }
-    .box:hover, .frame-box:hover { transform: translateY(-6px); box-shadow: 0 18px 38px rgba(15,23,42,0.14); }
-    .main-choose { background: linear-gradient(135deg, #dbeafe, #ecfeff); border-top: 1px solid rgba(15,23,42,0.06); border-bottom: 1px solid rgba(15,23,42,0.06); }
-    .contact-service { background: linear-gradient(180deg, #ffffff, #f8fbff); }
-    .form-group input, .form-group textarea { border: 1px solid #cbd5e1; transition: .2s ease; font-family: inherit; }
-    .form-group input:focus, .form-group textarea:focus { border-color: var(--brand-2); box-shadow: 0 0 0 4px var(--ring); outline: none; }
-    .submit-btn { width: 100%; border: none; border-radius: 12px; padding: 13px 16px; color: #fff; font-weight: 700; letter-spacing: .2px; cursor: pointer; background: linear-gradient(120deg, var(--brand-1), var(--brand-2)); display: flex; align-items: center; justify-content: center; gap: 10px; }
-    .submit-btn:disabled { opacity: .8; cursor: not-allowed; }
-    .loader { width: 16px; height: 16px; border-radius: 50%; border: 2px solid rgba(255,255,255,.4); border-top-color: #fff; animation: spin .7s linear infinite; display: none; }
-    .submit-btn.is-loading .loader { display: inline-block; }
-    .form-status { margin-bottom: 14px; padding: 10px 12px; border-radius: 10px; font-size: 14px; font-weight: 600; display: none; }
-    .form-status.success { background: #dcfce7; color: #166534; border: 1px solid #86efac; display: block; }
-    .form-status.error { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; display: block; }
-    @keyframes spin { to { transform: rotate(360deg); } }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; overflow-x: hidden; max-width: 100%; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; color: var(--dark-2); background: var(--bg); line-height: 1.6; overflow-x: hidden; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+
+    /* ---- NAVBAR ---- */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.95); backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(15,23,42,0.08);
+      padding: 0 1.5rem;
+    }
+    .nav-inner {
+      max-width: 1200px; margin: auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 68px;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .nav-logo-text {
+      display: flex; flex-direction: column; line-height: 1.1;
+    }
+    .nav-logo-title {
+      font-size: 1.18rem; font-weight: 800; color: var(--dark); letter-spacing: -0.3px;
+    }
+    .nav-logo-sub {
+      font-size: 0.65rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; margin-top: 1px;
+    }
+    .nav-logo .logo-icon {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 17px;
+    }
+    .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+    .nav-links a { font-size: 0.875rem; font-weight: 600; color: var(--text-muted); transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--primary); font-weight: 700; }
+    .nav-cta {
+      display: flex; gap: 10px; align-items: center;
+    }
+    .btn-outline {
+      padding: 8px 18px; border-radius: 10px; font-size: 0.85rem; font-weight: 700;
+      border: 2px solid var(--border); color: var(--dark-2); transition: all 0.2s;
+    }
+    .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+    .btn-primary {
+      padding: 9px 20px; border-radius: 10px; font-size: 0.85rem; font-weight: 700;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white; transition: all 0.2s; box-shadow: 0 4px 12px rgba(249,115,22,0.3);
+    }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(249,115,22,0.4); }
+    .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 6px; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--dark); border-radius: 4px; transition: all 0.3s; margin: 4px 0; }
+
+    /* ---- HERO ---- */
+    .hero {
+      padding: 110px 1.5rem 70px;
+      background: linear-gradient(135deg, #0c1a2e 0%, #1e3a5f 45%, #0d4f4a 100%);
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: -50%; right: -10%; width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(249,115,22,0.15) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; bottom: -30%; left: -5%; width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(13,148,136,0.15) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero-inner {
+      max-width: 1200px; margin: auto; position: relative; z-index: 2;
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(249,115,22,0.15); border: 1px solid rgba(249,115,22,0.3);
+      color: #fb923c; padding: 6px 16px; border-radius: 30px;
+      font-size: 0.8rem; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-size: clamp(2.2rem, 5.5vw, 4rem); font-weight: 800;
+      color: #ffffff; line-height: 1.15; letter-spacing: -0.5px;
+      max-width: 850px; margin: 0 auto 1.2rem;
+    }
+    .hero h1 span { color: var(--primary); }
+    .hero p {
+      font-size: clamp(1rem, 2vw, 1.2rem); color: #94a3b8;
+      max-width: 650px; margin: 0 auto 2.5rem; font-weight: 400;
+    }
+
+    /* ---- SEARCH CARD ---- */
+    .search-card {
+      background: white; border-radius: 20px;
+      padding: 1rem 1.2rem; max-width: 860px; margin: 0 auto;
+      display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.25);
+    }
+    .search-field {
+      flex: 1 1 200px;
+      display: flex; align-items: center; gap: 10px;
+      background: #f1f5f9; border-radius: 12px; padding: 12px 14px;
+    }
+    .search-field i { color: var(--text-muted); font-size: 14px; flex-shrink: 0; }
+    .search-field select, .search-field input {
+      border: none; background: transparent; outline: none;
+      font-family: inherit; font-size: 0.875rem; font-weight: 600;
+      color: var(--dark-2); width: 100%;
+    }
+    .search-divider { width: 1px; height: 36px; background: var(--border); }
+    .search-submit {
+      padding: 13px 24px; border-radius: 12px; border: none; cursor: pointer;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white; font-family: inherit; font-size: 0.9rem; font-weight: 700;
+      display: flex; align-items: center; gap: 8px; transition: all 0.2s;
+      box-shadow: 0 8px 20px rgba(249,115,22,0.35); white-space: nowrap;
+    }
+    .search-submit:hover { transform: translateY(-1px); box-shadow: 0 12px 28px rgba(249,115,22,0.45); }
+
+    /* ---- HERO STATS ---- */
+    .hero-stats {
+      display: flex; justify-content: center; gap: 2.5rem; flex-wrap: wrap;
+      margin-top: 2.5rem;
+    }
+    .stat-item { text-align: center; }
+    .stat-item .num { font-size: 1.6rem; font-weight: 800; color: #fff; }
+    .stat-item .lbl { font-size: 0.75rem; color: #94a3b8; font-weight: 500; }
+
+    /* ---- SECTION ---- */
+    section { padding: 80px 1.5rem; }
+    .section-inner { max-width: 1200px; margin: auto; }
+    .section-tag {
+      display: inline-block; background: var(--primary-light); color: var(--primary);
+      padding: 4px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem;
+    }
+    .section-tag.teal { background: var(--secondary-light); color: var(--secondary); }
+    .section-title {
+      font-size: clamp(1.7rem, 3.5vw, 2.5rem); font-weight: 800;
+      color: var(--dark); letter-spacing: -0.3px; line-height: 1.25;
+    }
+    .section-sub {
+      color: var(--text-muted); font-size: 1rem; margin-top: 0.6rem;
+      max-width: 580px;
+    }
+    .section-header { margin-bottom: 3rem; }
+
+    /* ---- CATEGORIES ---- */
+    .categories-bg { background: white; }
+    .cat-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 16px;
+    }
+    .cat-card {
+      background: var(--bg); border: 1.5px solid var(--border); border-radius: 18px;
+      padding: 1.5rem 1rem; text-align: center; cursor: pointer;
+      transition: all 0.25s ease;
+    }
+    .cat-card:hover {
+      border-color: var(--primary); background: var(--primary-light);
+      transform: translateY(-4px); box-shadow: 0 12px 28px rgba(249,115,22,0.12);
+    }
+    .cat-icon {
+      width: 52px; height: 52px; border-radius: 14px; margin: 0 auto 1rem;
+      background: linear-gradient(135deg, var(--primary-light), #ffe0cc);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--primary); font-size: 1.3rem; transition: all 0.25s;
+    }
+    .cat-card:hover .cat-icon {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+    }
+    .cat-name { font-size: 0.85rem; font-weight: 700; color: var(--dark-2); }
+
+    /* ---- HOW IT WORKS ---- */
+    .how-bg { background: var(--bg); }
+    .steps-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;
+    }
+    .step-card {
+      background: white; border: 1.5px solid var(--border); border-radius: 20px;
+      padding: 2rem 1.5rem; position: relative; transition: all 0.3s;
+    }
+    .step-card:hover { border-color: var(--secondary); box-shadow: 0 16px 36px rgba(13,148,136,0.1); transform: translateY(-4px); }
+    .step-num {
+      position: absolute; top: 1.5rem; right: 1.5rem;
+      width: 28px; height: 28px; border-radius: 8px;
+      background: var(--secondary-light); color: var(--secondary);
+      font-size: 0.75rem; font-weight: 800; display: flex; align-items: center; justify-content: center;
+    }
+    .step-icon {
+      width: 54px; height: 54px; border-radius: 14px; margin-bottom: 1.2rem;
+      background: linear-gradient(135deg, var(--secondary-light), #99f6e4);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--secondary); font-size: 1.3rem;
+    }
+    .step-card h3 { font-size: 1rem; font-weight: 800; color: var(--dark); margin-bottom: 0.5rem; }
+    .step-card p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.65; }
+
+    /* ---- WHY CHOOSE US ---- */
+    .why-bg { background: white; }
+    .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+    .why-img-wrap {
+      border-radius: 24px; overflow: hidden; position: relative;
+      box-shadow: 0 24px 56px rgba(12,26,46,0.18); aspect-ratio: 4/3;
+    }
+    .why-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .why-img-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(249,115,22,0.1), rgba(13,148,136,0.1));
+    }
+    .why-badge-float {
+      position: absolute; bottom: 1.5rem; left: 1.5rem;
+      background: white; border-radius: 14px; padding: 12px 18px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 12px;
+    }
+    .why-badge-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--primary-light); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+    .why-badge-text .num { font-size: 1.2rem; font-weight: 800; color: var(--dark); }
+    .why-badge-text .lbl { font-size: 0.7rem; color: var(--text-muted); font-weight: 600; }
+    .why-features { display: flex; flex-direction: column; gap: 16px; margin-top: 2rem; }
+    .why-feat {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 14px 16px; border-radius: 14px; border: 1.5px solid var(--border);
+      transition: all 0.2s;
+    }
+    .why-feat:hover { border-color: var(--primary); background: var(--primary-light); }
+    .why-feat-icon {
+      width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+      background: var(--primary-light); color: var(--primary);
+      display: flex; align-items: center; justify-content: center; font-size: 1rem;
+    }
+    .why-feat h4 { font-size: 0.9rem; font-weight: 700; color: var(--dark); }
+    .why-feat p { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
+
+    /* ---- CTA ---- */
+    .cta-section {
+      background: linear-gradient(135deg, var(--dark) 0%, #1e3a5f 50%, #0d4f4a 100%);
+      padding: 80px 1.5rem; text-align: center;
+    }
+    .cta-inner { max-width: 750px; margin: auto; }
+    .cta-section h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; color: white; margin-bottom: 1rem; }
+    .cta-section p { color: #94a3b8; font-size: 1rem; margin-bottom: 2.5rem; }
+    .cta-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .cta-btn-primary {
+      padding: 14px 28px; border-radius: 12px; font-family: inherit; font-size: 0.95rem; font-weight: 700;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white; border: none; cursor: pointer;
+      box-shadow: 0 8px 20px rgba(249,115,22,0.35); transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px;
+    }
+    .cta-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(249,115,22,0.5); }
+    .cta-btn-secondary {
+      padding: 14px 28px; border-radius: 12px; font-family: inherit; font-size: 0.95rem; font-weight: 700;
+      background: rgba(255,255,255,0.1); border: 2px solid rgba(255,255,255,0.25);
+      color: white; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px;
+    }
+    .cta-btn-secondary:hover { background: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.45); }
+
+    /* ---- FOOTER ---- */
+    footer {
+      background: var(--dark); color: #94a3b8; padding: 64px 1.5rem 28px;
+    }
+    .footer-inner { max-width: 1200px; margin: auto; }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1.2fr; gap: 48px;
+      padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; }
+    .footer-logo .logo-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex; align-items: center; justify-content: center; color: white; font-size: 15px;
+    }
+    .footer-logo-title { font-size: 1.15rem; font-weight: 800; color: white; letter-spacing: -0.3px; line-height: 1.1; }
+    .footer-logo-sub { font-size: 0.65rem; font-weight: 700; color: #fb923c; text-transform: uppercase; letter-spacing: 1px; margin-top: 1px; }
+    .footer-desc { font-size: 0.85rem; line-height: 1.7; max-width: 260px; }
+    .footer-socials { display: flex; gap: 10px; margin-top: 1.2rem; }
+    .footer-social {
+      width: 36px; height: 36px; border-radius: 9px;
+      background: rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center;
+      color: #94a3b8; font-size: 14px; transition: all 0.2s;
+    }
+    .footer-social:hover { background: var(--primary); color: white; }
+    .footer-col h4 { font-size: 0.85rem; font-weight: 800; color: white; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.8px; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .footer-links a { font-size: 0.85rem; color: #94a3b8; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--primary); }
+    .footer-contact { display: flex; flex-direction: column; gap: 12px; }
+    .footer-contact-item { display: flex; align-items: flex-start; gap: 10px; font-size: 0.82rem; }
+    .footer-contact-icon { color: var(--primary); margin-top: 2px; width: 14px; flex-shrink: 0; }
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;
+      gap: 8px; padding-top: 28px; font-size: 0.8rem;
+    }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 900px) {
+      .why-grid { grid-template-columns: 1fr; }
+      .why-img-wrap { display: none; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    }
+    @media (max-width: 768px) {
+      /* Prevent horizontal shift and clipping from AOS on mobile/tablet */
+      [data-aos="fade-left"],
+      [data-aos="fade-right"] {
+        transform: translate3d(0, 16px, 0) !important;
+      }
+      [data-aos="fade-up"],
+      [data-aos="zoom-in"] {
+        transform: translate3d(0, 16px, 0) !important;
+      }
+      [data-aos].aos-animate {
+        transform: translate3d(0, 0, 0) !important;
+        opacity: 1 !important;
+      }
+    }
+    @media (max-width: 640px) {
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: block; }
+      .search-card { flex-direction: column; padding: 1rem; }
+      .search-field { width: 100%; flex: none; }
+      .search-submit { width: 100%; justify-content: center; }
+      .search-divider { display: none; }
+      .hero h1 { font-size: 2rem; }
+      .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+      .footer-desc { max-width: 100%; }
+      .hero-stats { gap: 1.5rem; }
+      .cta-buttons { flex-direction: column; align-items: stretch; width: 100%; max-width: 380px; margin: 0 auto; }
+      .cta-btn-primary, .cta-btn-secondary { width: 100%; justify-content: center; text-align: center; }
+    }
+    @media (min-width: 480px) and (max-width: 640px) {
+      .cat-grid { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    }
+    .mobile-nav {
+      display: none; position: fixed; top: 68px; left: 0; right: 0; z-index: 99;
+      background: white; border-bottom: 1px solid var(--border);
+      padding: 1.5rem; flex-direction: column; gap: 1rem;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a { font-size: 0.95rem; font-weight: 600; color: var(--dark-2); padding: 8px 0; border-bottom: 1px solid var(--border); }
+    .mobile-nav a.active { color: var(--primary); font-weight: 700; }
+    .mobile-nav .mob-cta { margin-top: 8px; display: flex; gap: 10px; }
   </style>
 </head>
-
 <body>
-  <header>
-    <nav>
-      <div class="main-nav">
-        <a href="#" class="navbar-logo">
-          <img src="./assets/images/header logo.png" alt="company logo">
-        </a>
-        <div class="navbar-content" id="navbar-content">
-          <ul>
-            <li><a href="home.html" class="hover-link">Home</a></li>
-            <li><a href="about.html" class="hover-link">About</a></li>
-            <li><a href="contact.html" class="hover-link">Contact</a></li>
-            <li class="ham-hidden"><a href="login.php" class="ham-responsive">Login</a></li>
-          </ul>
-        </div>
-        <div class="btn-ham">
-          <a href="login.php" class="ham-responsive">Login</a>
-          <a href="#" class="nav-toggle menu-hover" id="nav-toggle">
-            <i class="fa-solid fa-bars" style="color: #000000;"></i>
-          </a>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-inner">
+    <a href="home.html" class="nav-logo">
+      <img src="assets/logo.png" alt="Work Connect Logo" style="height:44px;width:44px;object-fit:contain;border-radius:10px;" />
+      <div class="nav-logo-text">
+        <span class="nav-logo-title">Work Connect</span>
+        <span class="nav-logo-sub">Worker Job Portal</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="home.html" class="active">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="login.php" class="btn-outline">Sign In</a>
+      <a href="login.php" class="btn-primary">Get Started</a>
+    </div>
+    <button class="hamburger" onclick="toggleMobileNav()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-nav" id="mobileNav">
+  <a href="home.html" class="active">Home</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+  <div class="mob-cta">
+    <a href="login.php" class="btn-outline" style="flex:1;text-align:center;">Sign In</a>
+    <a href="login.php" class="btn-primary" style="flex:1;text-align:center;">Register</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge" data-aos="fade-down"><i class="fas fa-bolt"></i> 11 Trade Categories Available</div>
+    <h1 data-aos="fade-up" data-aos-delay="100">Find <span>Skilled Workers</span><br>Near You in Minutes</h1>
+    <p data-aos="fade-up" data-aos-delay="200">Connect with verified plumbers, electricians, carpenters, cooks, and more skilled workers in your area — fast, easy, and reliable.</p>
+
+    <div class="search-card" data-aos="fade-up" data-aos-delay="300">
+      <div class="search-field">
+        <i class="fas fa-layer-group"></i>
+        <select onchange="if(this.value)window.location.href='login.php'">
+          <option value="">All Categories</option>
+          <option>Plumber</option>
+          <option>Electrician</option>
+          <option>Carpenter</option>
+          <option>Painter</option>
+          <option>Construction Worker</option>
+          <option>Technician</option>
+          <option>Cleaner</option>
+          <option>Driver</option>
+          <option>Mechanic</option>
+          <option>Gardener</option>
+          <option>Cook</option>
+        </select>
+      </div>
+      <div class="search-divider"></div>
+      <div class="search-field">
+        <i class="fas fa-location-dot"></i>
+        <input type="text" placeholder="Enter your location..." onclick="window.location.href='login.php'">
+      </div>
+      <button class="search-submit" onclick="window.location.href='login.php'">
+        <i class="fas fa-search"></i> Find Workers
+      </button>
+    </div>
+
+    <div class="hero-stats" data-aos="fade-up" data-aos-delay="400">
+      <div class="stat-item"><div class="num">500+</div><div class="lbl">Skilled Workers</div></div>
+      <div class="stat-item"><div class="num">11</div><div class="lbl">Trade Categories</div></div>
+      <div class="stat-item"><div class="num">4.8★</div><div class="lbl">Average Rating</div></div>
+      <div class="stat-item"><div class="num">1000+</div><div class="lbl">Happy Clients</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="categories-bg">
+  <div class="section-inner">
+    <div class="section-header" data-aos="fade-up">
+      <span class="section-tag">Work Categories</span>
+      <h2 class="section-title">Find Workers by Trade</h2>
+      <p class="section-sub">Browse skilled professionals across all major trade categories in your area.</p>
+    </div>
+    <div class="cat-grid">
+      <a href="login.php" class="cat-card" data-aos="zoom-in" data-aos-delay="0">
+        <div class="cat-icon"><i class="fas fa-faucet-drip"></i></div>
+        <div class="cat-name">Plumber</div>
+      </a>
+      <a href="login.php" class="cat-card" data-aos="zoom-in" data-aos-delay="50">
+        <div class="cat-icon"><i class="fas fa-bolt"></i></div>
+        <div class="cat-name">Electrician</div>
+      </a>
+      <a href="login.php" class="cat-card" data-aos="zoom-in" data-aos-delay="100">
+        <div class="cat-icon"><i class="fas fa-hammer"></i></div>
+        <div class="cat-name">Carpenter</div>
+      </a>
+      <a href="login.php" class="cat-card" data-aos="zoom-in" data-aos-delay="150">
+        <div class="cat-icon"><i class="fas fa-paint-roller"></i></div>
+        <div class="cat-name">Painter</div>
+      </a>
+      <a href="login.php" class="cat-card" data-aos="zoom-in" data-aos-delay="200">
+        <div class="cat-icon"><i class="fas fa-trowel-bricks"></i></div>
+        <div class="cat-name">Construction Worker</div>
+      </a>
+      <a href="login.php" class="cat-card" data-aos="zoom-in" data-aos-delay="250">
+        <div class="cat-icon"><i class="fas fa-wrench"></i></div>
+        <div class="cat-name">Technician</div>
+      </a>
+      <a href="login.php" class="cat-card" data-aos="zoom-in" data-aos-delay="300">
+        <div class="cat-icon"><i class="fas fa-broom"></i></div>
+        <div class="cat-name">Cleaner</div>
+      </a>
+      <a href="login.php" class="cat-card" data-aos="zoom-in" data-aos-delay="0">
+        <div class="cat-icon"><i class="fas fa-id-card"></i></div>
+        <div class="cat-name">Driver</div>
+      </a>
+      <a href="login.php" class="cat-card" data-aos="zoom-in" data-aos-delay="50">
+        <div class="cat-icon"><i class="fas fa-gears"></i></div>
+        <div class="cat-name">Mechanic</div>
+      </a>
+      <a href="login.php" class="cat-card" data-aos="zoom-in" data-aos-delay="100">
+        <div class="cat-icon"><i class="fas fa-seedling"></i></div>
+        <div class="cat-name">Gardener</div>
+      </a>
+      <a href="login.php" class="cat-card" data-aos="zoom-in" data-aos-delay="150">
+        <div class="cat-icon"><i class="fas fa-utensils"></i></div>
+        <div class="cat-name">Cook</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-bg">
+  <div class="section-inner">
+    <div class="section-header" style="text-align:center;" data-aos="fade-up">
+      <span class="section-tag teal">How It Works</span>
+      <h2 class="section-title" style="margin:0 auto;">Simple 4-Step Process</h2>
+      <p class="section-sub" style="margin:0.6rem auto 0;">From search to hire in minutes — no middlemen, no hassle.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card" data-aos="fade-up" data-aos-delay="0">
+        <div class="step-num">01</div>
+        <div class="step-icon"><i class="fas fa-user-plus"></i></div>
+        <h3>Create an Account</h3>
+        <p>Register as a client or as a skilled worker. It's free and takes under 2 minutes.</p>
+      </div>
+      <div class="step-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="step-num">02</div>
+        <div class="step-icon"><i class="fas fa-search"></i></div>
+        <h3>Search Workers</h3>
+        <p>Filter workers by trade category, location, experience, availability, and daily rates.</p>
+      </div>
+      <div class="step-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="step-num">03</div>
+        <div class="step-icon"><i class="fas fa-id-badge"></i></div>
+        <h3>View Profile & Hire</h3>
+        <p>Review full profiles with skills, experience, ratings, and contact info — then send a work request.</p>
+      </div>
+      <div class="step-card" data-aos="fade-up" data-aos-delay="300">
+        <div class="step-num">04</div>
+        <div class="step-icon"><i class="fas fa-comments"></i></div>
+        <h3>Chat & Confirm</h3>
+        <p>Communicate directly with the worker via live chat to finalise timing, location, and payment.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE US -->
+<section class="why-bg">
+  <div class="section-inner">
+    <div class="why-grid">
+      <div class="why-img-wrap" data-aos="fade-right">
+        <img src="./assets/images/choose-image.jpg" alt="Skilled workers at work" loading="lazy">
+        <div class="why-img-overlay"></div>
+        <div class="why-badge-float">
+          <div class="why-badge-icon"><i class="fas fa-star"></i></div>
+          <div class="why-badge-text">
+            <div class="num">4.8 / 5</div>
+            <div class="lbl">Average Rating</div>
+          </div>
         </div>
       </div>
-    </nav>
-  </header>
-
-  <section class="hero">
-    <div class="hero-main">
-      <div class="hero-img">
-        <div class="hero-shadow"></div>
-        <div class="hero-content">
-          <span>Connecting Labourers and Employers Digitally</span>
-          <div>
-            <p>Find skilled workers or job opportunities easily with Smart Labouring System, a digital platform that
-              connects labourers and employers, streamlines hiring, improves communication, saves time, and boosts
-              productivity.</p>
+      <div data-aos="fade-left">
+        <span class="section-tag">Why Choose Us</span>
+        <h2 class="section-title">The Smarter Way to Find Workers</h2>
+        <p class="section-sub">Work Connect makes it simple to find reliable skilled workers without the run-around.</p>
+        <div class="why-features">
+          <div class="why-feat" data-aos="fade-up" data-aos-delay="0">
+            <div class="why-feat-icon"><i class="fas fa-shield-halved"></i></div>
+            <div>
+              <h4>Verified Profiles</h4>
+              <p>Every worker profile is reviewed with real skills and experience listed honestly.</p>
+            </div>
           </div>
-          <button type="button">Get Started</button>
+          <div class="why-feat" data-aos="fade-up" data-aos-delay="100">
+            <div class="why-feat-icon"><i class="fas fa-location-dot"></i></div>
+            <div>
+              <h4>Hyper-Local Matching</h4>
+              <p>Find workers in your exact area — Nallasopara, Vasai, Virar, Naigaon, Mumbai and beyond.</p>
+            </div>
+          </div>
+          <div class="why-feat" data-aos="fade-up" data-aos-delay="200">
+            <div class="why-feat-icon"><i class="fas fa-clock"></i></div>
+            <div>
+              <h4>Real-Time Availability</h4>
+              <p>Workers mark themselves available or busy in real time — no more chasing unavailable people.</p>
+            </div>
+          </div>
+          <div class="why-feat" data-aos="fade-up" data-aos-delay="300">
+            <div class="why-feat-icon"><i class="fas fa-comment-dots"></i></div>
+            <div>
+              <h4>Direct Messaging</h4>
+              <p>Chat directly with workers, no middlemen. Discuss requirements, rates, and timings instantly.</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="service">
-    <div class="main-box">
-      <div class="service-header">Our Consulting Special Features</div>
-      <div class="service-box grid-container sm-grid sm-grid-cols-1 md-grid md-grid-cols-2 lg-grid-cols-3 xl-grid-cols-5">
-        <div class="box1 box">
-          <div class="icon"><img src="./assets/images/box1.png" alt="service image"></div>
-          <div class="icon-sec">
-            <span>Skilled worker hiring</span>
-            <p>Skilled worker hiring made easier by connecting qualified labourers with employers quickly and
-              efficiently.</p>
-          </div>
-        </div>
-        <div class="box2 box">
-          <div class="icon"><img src="./assets/images/box2.png" alt="service image"></div>
-          <div class="icon-sec">
-            <span>Location-based matching</span>
-            <p>Location-based matching helps employers find nearby workers quickly, reducing travel time and improving
-              hiring efficiency.</p>
-          </div>
-        </div>
-        <div class="box3 box">
-          <div class="icon"><img src="./assets/images/box3.png" alt="service image"></div>
-          <div class="icon-sec">
-            <span>Customer support</span>
-            <p>Customer support provides timely assistance, resolves issues efficiently, and ensures a smooth experience
-              for all users.</p>
-          </div>
-        </div>
-        <div class="box4 box">
-          <div class="icon"><img src="./assets/images/box4.png" alt="service image"></div>
-          <div class="icon-sec">
-            <span>Direct communication</span>
-            <p>Direct communication allows employers and labourers to interact instantly, share updates, and coordinate
-              work effectively.</p>
-          </div>
-        </div>
-        <div class="box5 box">
-          <div class="icon"><img src="./assets/images/box5.png" alt="service image"></div>
-          <div class="icon-sec">
-            <span>Cost-effective strategies</span>
-            <p>Cost-effective strategies help reduce operational costs, optimize resource usage, and improve overall
-              efficiency for businesses.</p>
-          </div>
-        </div>
-      </div>
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-inner" data-aos="zoom-in">
+    <h2>Ready to Find the Right Worker?</h2>
+    <p>Join thousands of satisfied clients who found reliable plumbers, electricians, carpenters and more through Work Connect.</p>
+    <div class="cta-buttons">
+      <a href="login.php" class="cta-btn-primary"><i class="fas fa-search"></i> Find a Worker Now</a>
+      <a href="login.php" class="cta-btn-secondary"><i class="fas fa-hard-hat"></i> Register as a Worker</a>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section>
-    <div class="main-choose">
-      <div class="image-choose"><img src="./assets/images/choose-image.jpg" alt="choose us"></div>
-      <div class="content-choose">
-        <span class="main-header">Why You Choose Us?</span>
-        <div class="main-content">
-          <span><img src="./assets/images/check-icon.png" alt="check icon">Easy and fast hiring process connects workers
-            and employers.</span>
-          <span><img src="./assets/images/check-icon.png" alt="check icon">24/7 customer support providing reliable
-            assistance and resolution.</span>
-          <span><img src="./assets/images/check-icon.png" alt="check icon">Trusted and reliable platform for secure
-            hiring solutions.</span>
-          <span><img src="./assets/images/check-icon.png" alt="check icon">Skilled and verified workers available for
-            efficient job matching.</span>
-          <span><img src="./assets/images/check-icon.png" alt="check icon">Quick hiring and job search for efficient
-            workforce management.</span>
-        </div>
-        <button type="button">Learn More<img class="into" src="./assets/images/arrow-icon.png"
-            alt="arrow icon"></button>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="main-contact">
-      <div class="header-contact">Get In Touch!</div>
-      <div class="contact-box">
-        <div class="contact-service">
-          <h1>Contact Us</h1>
-          <div id="form-status" class="form-status" role="status" aria-live="polite"></div>
-          <form action="form_submit.php" method="POST">
-            <input type="hidden" name="source_page" value="home">
-            <div class="form-group">
-              <label for="name">Enter Your Name</label>
-              <input type="text" id="name" name="name" class="hover-outline" required>
-            </div>
-            <div class="form-group">
-              <label for="email">Enter Your Email</label>
-              <input type="email" id="email" name="email" class="hover-outline" required>
-            </div>
-            <div class="form-group">
-              <label for="city">Enter Your City</label>
-              <input type="text" id="city" name="city" class="hover-outline" required>
-            </div>
-            <div class="form-group">
-              <label for="message">Enter Message</label>
-              <textarea id="message" name="message" rows="10" class="hover-outline" required></textarea>
-            </div>
-            <div class="btn">
-              <button type="submit" class="submit-btn">
-                <span class="btn-text">Send Message</span>
-                <span class="loader" aria-hidden="true"></span>
-              </button>
-            </div>
-          </form>
-        </div>
-        <div class="contact-map">
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60209.606611838026!2d72.7647090875237!3d19.40806695751064!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7a93891055565%3A0xf39283d30d9ad8cc!2sNala%20Sopara%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1769418418705!5m2!1sen!2sin"
-            width="600" height="auto" style="border:0;" allowfullscreen="" loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="footer-Service">
-
-      <div class="First-box">
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
         <div class="footer-logo">
-          <img src="./assets/images/header logo.png" alt="footer logo">
+          <div style="background:#fff;border-radius:10px;padding:4px;display:flex;align-items:center;justify-content:center;width:48px;height:48px;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,0.18);">
+            <img src="assets/logo.png" alt="Work Connect Logo" style="height:38px;width:38px;object-fit:contain;" />
+          </div>
+          <div class="nav-logo-text">
+            <span class="footer-logo-title">Work Connect</span>
+            <span class="footer-logo-sub">Worker Job Portal</span>
+          </div>
         </div>
-        <div class="footer-paragraph">
-          <p>Smart Labouring System is a digital platform connecting labourers and employers, enabling fast hiring, easy
-            job search, direct communication, and efficient workforce management.</p>
-        </div>
-      </div>
-
-      <div class="Second-box">
-        <div class="footer-header">Quick Links</div>
-        <div class="Quick-Link">
-          <span><img src="./assets/images/home.png" alt="home icon"><a href="home.html">Home</a></span>
-          <span><img src="./assets/images/about.png" alt="about icon"><a href="about.html">About</a></span>
-          <span><img src="./assets/images/jobs.png" alt="jobs icon"><a href="#">Jobs</a></span>
-          <span><img src="./assets/images/contact.png" alt="contact icon"><a href="contact.html">Contact</a></span>
-        </div>
-      </div>
-
-      <div class="Third-box">
-        <div class="footer-header">Contact Details</div>
-        <div class="Contact-footer">
-          <span><img src="./assets/images/phone.png" alt="phone icon">+91 9503690491</span>
-          <span><img src="./assets/images/email.png" alt="email icon">amitvishwakarma3939@gmail.com</span>
-          <span><img src="./assets/images/location.png" alt="location icon">Room No.402, 2nd Floor, Mehta Chembur
-            bulding, Nallasopara (East), Maharashtra, India</span>
+        <p class="footer-desc">Work Connect is a digital platform connecting people who need skilled workers with reliable professionals for plumbing, electrical, carpentry, cleaning, and more.</p>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/" target="_blank" class="footer-social"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.facebook.com/" target="_blank" class="footer-social"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://web.whatsapp.com/" target="_blank" class="footer-social"><i class="fab fa-whatsapp"></i></a>
+          <a href="https://in.linkedin.com/" target="_blank" class="footer-social"><i class="fab fa-linkedin-in"></i></a>
+          <a href="https://www.youtube.com/" target="_blank" class="footer-social"><i class="fab fa-youtube"></i></a>
         </div>
       </div>
-
-      <div class="Forth-box">
-        <div class="footer-header">Follow On Us</div>
-        <div class="Follow-icon">
-          <a href="https://www.youtube.com/" target="_blank"><i class="fa-brands fa-youtube fa-2xl"
-              style="color: #ffffff;"></i></a>
-          <a href="https://www.instagram.com/" target="_blank"><i class="fa-brands fa-instagram fa-2xl"
-              style="color: #ffffff;"></i></a>
-          <a href="https://www.facebook.com/" target="_blank"><i class="fa-brands fa-facebook fa-2xl"
-              style="color: #ffffff;"></i></a>
-          <a href="https://in.linkedin.com/" target="_blank"><i class="fa-brands fa-linkedin fa-2xl"
-              style="color: #ffffff;"></i></a>
-          <a href="https://web.whatsapp.com/" target="_blank"><i class="fa-brands fa-whatsapp fa-2xl"
-              style="color: #ffffff;"></i></a>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="home.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="login.php">Sign In</a></li>
+          <li><a href="login.php">Register</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Categories</h4>
+        <ul class="footer-links">
+          <li><a href="login.php">Plumber</a></li>
+          <li><a href="login.php">Electrician</a></li>
+          <li><a href="login.php">Carpenter</a></li>
+          <li><a href="login.php">Painter</a></li>
+          <li><a href="login.php">Technician</a></li>
+          <li><a href="login.php">Cook</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <div class="footer-contact">
+          <div class="footer-contact-item">
+            <i class="fas fa-phone footer-contact-icon"></i>
+            <span>+91 9503690491</span>
+          </div>
+          <div class="footer-contact-item">
+            <i class="fas fa-envelope footer-contact-icon"></i>
+            <span>amitvishwakarma3939@gmail.com</span>
+          </div>
+          <div class="footer-contact-item">
+            <i class="fas fa-location-dot footer-contact-icon"></i>
+            <span>Room 402, Mehta Chembur Building, Nallasopara (East), Maharashtra</span>
+          </div>
         </div>
       </div>
-
     </div>
+    <div class="footer-bottom">
+      <span>© 2026 Work Connect – Worker Job Portal. All Rights Reserved.</span>
+      <span>Made with <i class="fas fa-heart" style="color:var(--primary);"></i> in Maharashtra</span>
+    </div>
+  </div>
+</footer>
 
-    <div class="Copyright-content">© 2026 Smart Labouring System | All Rights Reserved</div>
-  </footer>
-
-  <script src="./assets/js/javascript.js"></script>
-  <script>
-    (function () {
-      const statusEl = document.getElementById('form-status');
-      const form = document.querySelector('.contact-service form');
-      const btn = form ? form.querySelector('.submit-btn') : null;
-      const btnText = btn ? btn.querySelector('.btn-text') : null;
-      const params = new URLSearchParams(window.location.search);
-      const formStatus = params.get('form');
-
-      if (statusEl && formStatus) {
-        const map = {
-          success: { cls: 'success', msg: 'Message submitted successfully. We will contact you soon.' },
-          invalid_email: { cls: 'error', msg: 'Please enter a valid email address.' },
-          too_long: { cls: 'error', msg: 'Input is too long. Please shorten your message.' },
-          error: { cls: 'error', msg: 'Could not submit right now. Please try again.' }
-        };
-        const data = map[formStatus] || map.error;
-        statusEl.classList.add(data.cls);
-        statusEl.textContent = data.msg;
-        history.replaceState({}, '', window.location.pathname);
-      }
-
-      if (form && btn && btnText) {
-        form.addEventListener('submit', function () {
-          btn.classList.add('is-loading');
-          btn.disabled = true;
-          btnText.textContent = 'Submitting...';
-        });
-      }
-    })();
-  </script>
+<script>
+  function toggleMobileNav() {
+    document.getElementById('mobileNav').classList.toggle('open');
+  }
+  // Close mobile nav on outside click
+  document.addEventListener('click', function(e) {
+    const nav = document.getElementById('mobileNav');
+    if (nav.classList.contains('open') && !nav.contains(e.target) && !e.target.closest('.hamburger')) {
+      nav.classList.remove('open');
+    }
+  });
+</script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({ duration: 600, once: true, offset: 30, easing: 'ease-out-cubic' });
+</script>
 </body>
-
 </html>

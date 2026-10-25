@@ -1,197 +1,476 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Work Connect - Smart Labouring System</title>
-  <link rel="stylesheet" href="./assets/css/style.css">
-  <link rel="stylesheet" href="./assets/css/media-queries.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-    integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <title>Contact Us - Work Connect | Worker Job Portal</title>
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
   <style>
     :root {
-      --brand-1: #0f172a;
-      --brand-2: #0ea5e9;
-      --ring: rgba(14, 165, 233, 0.25);
+      --primary: #f97316;
+      --primary-dark: #ea580c;
+      --primary-light: #fff7ed;
+      --secondary: #0d9488;
+      --secondary-dark: #0f766e;
+      --secondary-light: #f0fdfa;
+      --dark: #0c1a2e;
+      --dark-2: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --bg: #f8fafc;
     }
-    body { font-family: 'Manrope', sans-serif; background: radial-gradient(circle at 80% 0%, #dbeafe 0%, #f8fafc 45%, #f8fafc 100%); color: #0f172a; }
-    nav { background: rgba(255,255,255,0.86); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(15,23,42,0.08); }
-    .main-contact { padding-top: 8rem; }
-    .header-contact { font-weight: 800; letter-spacing: -0.8px; font-size: clamp(2rem, 4vw, 3rem); }
-    .contact-service, .contact-map iframe { border-radius: 18px; }
-    .contact-service { border: 1px solid rgba(15,23,42,0.08); background: linear-gradient(180deg,#fff,#f8fbff); box-shadow: 0 16px 35px rgba(15,23,42,0.09); }
-    .contact-service h1 { font-family: inherit; font-size: 2rem; color: #0f172a; }
-    .form-group input, .form-group textarea { border: 1px solid #cbd5e1; transition: .2s ease; font-family: inherit; }
-    .form-group input:focus, .form-group textarea:focus { border-color: var(--brand-2); box-shadow: 0 0 0 4px var(--ring); outline: none; }
-    .submit-btn { width: 100%; border: none; border-radius: 12px; padding: 13px 16px; color: #fff; font-weight: 700; cursor: pointer; background: linear-gradient(120deg, var(--brand-1), var(--brand-2)); display: flex; align-items: center; justify-content: center; gap: 10px; }
-    .submit-btn:disabled { opacity: .8; cursor: not-allowed; }
-    .loader { width: 16px; height: 16px; border-radius: 50%; border: 2px solid rgba(255,255,255,.4); border-top-color: #fff; animation: spin .7s linear infinite; display: none; }
-    .submit-btn.is-loading .loader { display: inline-block; }
-    .form-status { margin-bottom: 14px; padding: 10px 12px; border-radius: 10px; font-size: 14px; font-weight: 600; display: none; }
-    .form-status.success { background: #dcfce7; color: #166534; border: 1px solid #86efac; display: block; }
-    .form-status.error { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; display: block; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; overflow-x: hidden; max-width: 100%; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; color: var(--dark-2); background: var(--bg); line-height: 1.6; overflow-x: hidden; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.96); backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(15,23,42,0.08); padding: 0 1.5rem;
+    }
+    .nav-inner { max-width: 1200px; margin: auto; display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; }
+    .nav-logo-text { display: flex; flex-direction: column; line-height: 1.1; }
+    .nav-logo-title { font-size: 1.18rem; font-weight: 800; color: var(--dark); letter-spacing: -0.3px; }
+    .nav-logo-sub { font-size: 0.65rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; margin-top: 1px; }
+    .nav-logo .logo-icon {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex; align-items: center; justify-content: center; color: white; font-size: 17px;
+    }
+    .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+    .nav-links a { font-size: 0.875rem; font-weight: 600; color: var(--text-muted); transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--primary); font-weight: 700; }
+    .nav-cta { display: flex; gap: 10px; align-items: center; }
+    .btn-outline { padding: 8px 18px; border-radius: 10px; font-size: 0.85rem; font-weight: 700; border: 2px solid var(--border); color: var(--dark-2); transition: all 0.2s; }
+    .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+    .btn-primary { padding: 9px 20px; border-radius: 10px; font-size: 0.85rem; font-weight: 700; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; transition: all 0.2s; box-shadow: 0 4px 12px rgba(249,115,22,0.3); }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(249,115,22,0.4); }
+    .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 6px; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--dark); border-radius: 4px; transition: all 0.3s; margin: 4px 0; }
+
+    .mobile-nav {
+      display: none; position: fixed; top: 68px; left: 0; right: 0; z-index: 99;
+      background: white; border-bottom: 1px solid var(--border);
+      padding: 1.5rem; flex-direction: column; gap: 1rem;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a { font-size: 0.95rem; font-weight: 600; color: var(--dark-2); padding: 8px 0; border-bottom: 1px solid var(--border); }
+    .mobile-nav a.active { color: var(--primary); font-weight: 700; }
+    .mobile-nav .mob-cta { margin-top: 8px; display: flex; gap: 10px; }
+
+    /* PAGE HERO */
+    .page-hero {
+      padding: 130px 1.5rem 80px;
+      background: linear-gradient(135deg, #0c1a2e 0%, #1e3a5f 45%, #0d4f4a 100%);
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .page-hero::before {
+      content: ''; position: absolute; top: -40%; right: -10%; width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(249,115,22,0.15) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .page-hero-inner { position: relative; z-index: 2; }
+    .page-badge {
+      display: inline-block; background: rgba(249,115,22,0.15);
+      border: 1px solid rgba(249,115,22,0.3); color: #fb923c;
+      padding: 5px 16px; border-radius: 30px; font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase; margin-bottom: 1.2rem;
+    }
+    .page-hero h1 { font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 800; color: white; letter-spacing: -0.3px; }
+    .page-hero h1 span { color: var(--primary); }
+    .page-hero p { color: #94a3b8; font-size: 1.05rem; max-width: 540px; margin: 1rem auto 0; }
+
+    /* MAIN CONTENT */
+    .main-wrap { max-width: 1200px; margin: 0 auto; padding: 70px 1.5rem; }
+    .contact-layout { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 3rem; align-items: start; }
+
+    /* FORM CARD */
+    .form-card {
+      background: white; border: 1.5px solid var(--border); border-radius: 24px;
+      padding: 2.5rem; box-shadow: 0 10px 30px rgba(15,23,42,0.06);
+    }
+    .form-card h2 { font-size: 1.5rem; font-weight: 800; color: var(--dark); margin-bottom: 0.3rem; }
+    .form-card p { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.8rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 0.8rem; font-weight: 700; color: var(--dark-2); margin-bottom: 6px; }
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 12px;
+      font-family: inherit; font-size: 0.88rem; color: var(--dark-2); background: #f8fafc;
+      transition: all 0.2s; outline: none;
+    }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+      border-color: var(--primary); box-shadow: 0 0 0 4px rgba(249,115,22,0.1);
+      background: white;
+    }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .submit-btn {
+      width: 100%; padding: 14px; border-radius: 12px; border: none; cursor: pointer;
+      font-family: inherit; font-size: 0.95rem; font-weight: 700; color: white;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      transition: all 0.2s; box-shadow: 0 8px 20px rgba(249,115,22,0.3);
+    }
+    .submit-btn:hover { transform: translateY(-1px); box-shadow: 0 14px 28px rgba(249,115,22,0.4); }
+    .submit-btn:disabled { opacity: 0.75; cursor: not-allowed; transform: none; }
+    .loader { width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.4); border-top-color: white; border-radius: 50%; animation: spin 0.7s linear infinite; display: none; }
+    .submit-btn.is-loading .loader { display: block; }
     @keyframes spin { to { transform: rotate(360deg); } }
+    .form-status { margin-bottom: 16px; padding: 12px 14px; border-radius: 12px; font-size: 0.85rem; font-weight: 600; display: none; }
+    .form-status.success { background: #dcfce7; color: #166534; border: 1px solid #86efac; display: flex; align-items: center; gap: 8px; }
+    .form-status.error { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; display: flex; align-items: center; gap: 8px; }
+
+    /* RIGHT SIDE */
+    .contact-right { display: flex; flex-direction: column; gap: 20px; }
+
+    /* INFO CARDS */
+    .info-card {
+      background: white; border: 1.5px solid var(--border); border-radius: 20px;
+      padding: 1.5rem; display: flex; align-items: flex-start; gap: 14px; transition: all 0.2s;
+    }
+    .info-card:hover { border-color: var(--primary); box-shadow: 0 8px 24px rgba(249,115,22,0.08); }
+    .info-icon {
+      width: 46px; height: 46px; border-radius: 12px; flex-shrink: 0;
+      background: var(--primary-light); color: var(--primary);
+      display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+    }
+    .info-icon.teal { background: var(--secondary-light); color: var(--secondary); }
+    .info-content h4 { font-size: 0.88rem; font-weight: 800; color: var(--dark); margin-bottom: 3px; }
+    .info-content p, .info-content a { font-size: 0.83rem; color: var(--text-muted); line-height: 1.55; }
+    .info-content a:hover { color: var(--primary); }
+
+    /* MAP */
+    .map-card {
+      background: white; border: 1.5px solid var(--border); border-radius: 20px;
+      overflow: hidden; box-shadow: 0 4px 16px rgba(15,23,42,0.06);
+    }
+    .map-card iframe { width: 100%; height: 240px; border: none; display: block; }
+    .map-card-label {
+      padding: 14px 16px; display: flex; align-items: center; gap: 10px;
+    }
+    .map-card-label i { color: var(--primary); }
+    .map-card-label span { font-size: 0.82rem; font-weight: 600; color: var(--text-muted); }
+
+    /* FOOTER */
+    footer {
+      background: var(--dark); color: #94a3b8; padding: 64px 1.5rem 28px; margin-top: 60px;
+    }
+    .footer-inner { max-width: 1200px; margin: auto; }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1.2fr; gap: 48px;
+      padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; }
+    .footer-logo .logo-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex; align-items: center; justify-content: center; color: white; font-size: 15px;
+    }
+    .footer-logo-title { font-size: 1.15rem; font-weight: 800; color: white; letter-spacing: -0.3px; line-height: 1.1; }
+    .footer-logo-sub { font-size: 0.65rem; font-weight: 700; color: #fb923c; text-transform: uppercase; letter-spacing: 1px; margin-top: 1px; }
+    .footer-desc { font-size: 0.85rem; line-height: 1.7; max-width: 280px; }
+    .footer-socials { display: flex; gap: 10px; margin-top: 1.2rem; }
+    .footer-social {
+      width: 36px; height: 36px; border-radius: 9px;
+      background: rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center;
+      color: #94a3b8; font-size: 14px; transition: all 0.2s;
+    }
+    .footer-social:hover { background: var(--primary); color: white; }
+    .footer-col h4 { font-size: 0.85rem; font-weight: 800; color: white; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.8px; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .footer-links a { font-size: 0.85rem; color: #94a3b8; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--primary); }
+    .footer-contact { display: flex; flex-direction: column; gap: 12px; }
+    .footer-contact-item { display: flex; align-items: flex-start; gap: 10px; font-size: 0.82rem; }
+    .footer-contact-icon { color: var(--primary); margin-top: 2px; width: 14px; flex-shrink: 0; }
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;
+      gap: 8px; padding-top: 28px; font-size: 0.8rem;
+    }
+
+    @media (max-width: 900px) {
+      .contact-layout { grid-template-columns: 1fr; gap: 2rem; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    }
+    @media (max-width: 768px) {
+      /* Prevent horizontal shift and clipping from AOS on mobile/tablet */
+      [data-aos="fade-left"],
+      [data-aos="fade-right"] {
+        transform: translate3d(0, 16px, 0) !important;
+      }
+      [data-aos="fade-up"],
+      [data-aos="zoom-in"] {
+        transform: translate3d(0, 16px, 0) !important;
+      }
+      [data-aos].aos-animate {
+        transform: translate3d(0, 0, 0) !important;
+        opacity: 1 !important;
+      }
+
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: block; }
+      .main-wrap { padding: 40px 1rem; }
+      .form-card { padding: 1.8rem 1.2rem; }
+      .info-card { padding: 1.2rem; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
-
 <body>
-  <header>
-    <nav>
-      <div class="main-nav">
-        <a href="#" class="navbar-logo">
-          <img src="./assets/images/header logo.png" alt="company logo">
-        </a>
-        <div class="navbar-content" id="navbar-content">
-          <ul>
-            <li><a href="home.html" class="hover-link">Home</a></li>
-            <li><a href="about.html" class="hover-link">About</a></li>
-            <li><a href="contact.html" class="hover-link">Contact</a></li>
-            <li class="ham-hidden"><a href="login.php" class="ham-responsive">Login</a></li>
-          </ul>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-inner">
+    <a href="home.html" class="nav-logo">
+      <img src="assets/logo.png" alt="Work Connect Logo" style="height:44px;width:44px;object-fit:contain;border-radius:10px;" />
+      <div class="nav-logo-text">
+        <span class="nav-logo-title">Work Connect</span>
+        <span class="nav-logo-sub">Worker Job Portal</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="home.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="login.php" class="btn-outline">Sign In</a>
+      <a href="login.php" class="btn-primary">Get Started</a>
+    </div>
+    <button class="hamburger" onclick="toggleMobileNav()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="home.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="contact.html" class="active">Contact</a>
+  <div class="mob-cta">
+    <a href="login.php" class="btn-outline" style="flex:1;text-align:center;">Sign In</a>
+    <a href="login.php" class="btn-primary" style="flex:1;text-align:center;">Register</a>
+  </div>
+</div>
+
+<!-- PAGE HERO -->
+<header class="page-hero">
+  <div class="page-hero-inner">
+    <span class="page-badge" data-aos="fade-down"><i class="fas fa-envelope"></i> Contact Us</span>
+    <h1 data-aos="fade-up" data-aos-delay="100">Get In <span>Touch</span></h1>
+    <p data-aos="fade-up" data-aos-delay="200">Have a question, feedback, or need help finding a worker? Reach out to our support team and we will respond promptly.</p>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main class="main-wrap">
+  <div class="contact-layout">
+
+    <!-- FORM -->
+    <div class="form-card" data-aos="fade-right">
+      <h2>Send Us a Message</h2>
+      <p>Fill in the form below and our team will get back to you within 24 hours.</p>
+
+      <div id="form-status" class="form-status" role="status" aria-live="polite"></div>
+
+      <form action="form_submit.php" method="POST" id="contactForm">
+        <input type="hidden" name="source_page" value="contact">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Your Name *</label>
+            <input type="text" id="name" name="name" placeholder="e.g. Rahul Sharma" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input type="email" id="email" name="email" placeholder="you@example.com" required>
+          </div>
         </div>
-        <div class="btn-ham">
-          <a href="login.php" class="ham-responsive">Login</a>
-          <a href="#" class="nav-toggle menu-hover" id="nav-toggle">
-            <i class="fa-solid fa-bars" style="color: #000000;"></i>
-          </a>
+        <div class="form-group">
+          <label for="city">Your City *</label>
+          <input type="text" id="city" name="city" placeholder="e.g. Nallasopara, Mumbai" required>
+        </div>
+        <div class="form-group">
+          <label for="message">Your Message *</label>
+          <textarea id="message" name="message" rows="6" placeholder="Tell us what you need help with..." required></textarea>
+        </div>
+        <button type="submit" class="submit-btn" id="submitBtn">
+          <span class="btn-text"><i class="fas fa-paper-plane"></i> Send Message</span>
+          <span class="loader" aria-hidden="true"></span>
+        </button>
+      </form>
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="contact-right" data-aos="fade-left">
+      <div class="info-card" data-aos="fade-up" data-aos-delay="0">
+        <div class="info-icon"><i class="fas fa-phone"></i></div>
+        <div class="info-content">
+          <h4>Phone Number</h4>
+          <a href="tel:+919503690491">+91 9503690491</a>
+          <p style="margin-top:3px;">Mon – Sat, 9 AM to 7 PM IST</p>
         </div>
       </div>
-    </nav>
-  </header>
-
-  <section>
-    <div class="main-contact">
-      <div class="header-contact">Get In Touch!</div>
-      <div class="contact-box">
-        <div class="contact-service">
-          <h1>Contact Us</h1>
-          <div id="form-status" class="form-status" role="status" aria-live="polite"></div>
-          <form action="form_submit.php" method="POST">
-            <input type="hidden" name="source_page" value="contact">
-            <div class="form-group">
-              <label for="name">Enter Your Name</label>
-              <input type="text" id="name" name="name" class="hover-outline" required>
-            </div>
-            <div class="form-group">
-              <label for="email">Enter Your Email</label>
-              <input type="email" id="email" name="email" class="hover-outline" required>
-            </div>
-            <div class="form-group">
-              <label for="city">Enter Your City</label>
-              <input type="text" id="city" name="city" class="hover-outline" required>
-            </div>
-            <div class="form-group">
-              <label for="message">Enter Message</label>
-              <textarea id="message" name="message" rows="10" class="hover-outline" required></textarea>
-            </div>
-            <div class="btn">
-              <button type="submit" class="submit-btn">
-                <span class="btn-text">Send Message</span>
-                <span class="loader" aria-hidden="true"></span>
-              </button>
-            </div>
-          </form>
+      <div class="info-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="info-icon teal"><i class="fas fa-envelope"></i></div>
+        <div class="info-content">
+          <h4>Email Address</h4>
+          <a href="mailto:amitvishwakarma3939@gmail.com">amitvishwakarma3939@gmail.com</a>
+          <p style="margin-top:3px;">We reply within 24 hours</p>
         </div>
-        <div class="contact-map">
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60209.606611838026!2d72.7647090875237!3d19.40806695751064!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7a93891055565%3A0xf39283d30d9ad8cc!2sNala%20Sopara%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1769418418705!5m2!1sen!2sin"
-            width="600" height="auto" style="border:0;" allowfullscreen="" loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+      <div class="info-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="info-icon"><i class="fas fa-location-dot"></i></div>
+        <div class="info-content">
+          <h4>Office Address</h4>
+          <p>Room No. 402, 2nd Floor, Mehta Chembur Building,<br>Nallasopara (East), Maharashtra, India – 401 209</p>
+        </div>
+      </div>
+      <div class="info-card" data-aos="fade-up" data-aos-delay="300">
+        <div class="info-icon teal"><i class="fas fa-clock"></i></div>
+        <div class="info-content">
+          <h4>Business Hours</h4>
+          <p>Monday – Saturday: 9:00 AM to 7:00 PM</p>
+          <p>Sunday: Closed</p>
+        </div>
+      </div>
+
+      <!-- MAP -->
+      <div class="map-card" data-aos="zoom-in" data-aos-delay="100">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60209.606611838026!2d72.7647090875237!3d19.40806695751064!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7a93891055565%3A0xf39283d30d9ad8cc!2sNala%20Sopara%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1769418418705!5m2!1sen!2sin"
+          loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+        <div class="map-card-label">
+          <i class="fas fa-map-marker-alt"></i>
+          <span>Nallasopara (East), Maharashtra, India</span>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</main>
 
-  <footer>
-    <div class="footer-Service">
-
-      <div class="First-box">
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
         <div class="footer-logo">
-          <img src="./assets/images/header logo.png" alt="footer logo">
+          <div style="background:#fff;border-radius:10px;padding:4px;display:flex;align-items:center;justify-content:center;width:48px;height:48px;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,0.18);">
+            <img src="assets/logo.png" alt="Work Connect Logo" style="height:38px;width:38px;object-fit:contain;" />
+          </div>
+          <div class="nav-logo-text">
+            <span class="footer-logo-title">Work Connect</span>
+            <span class="footer-logo-sub">Worker Job Portal</span>
+          </div>
         </div>
-        <div class="footer-paragraph">
-          <p>Smart Labouring System is a digital platform connecting labourers and employers, enabling fast hiring, easy
-            job search, direct communication, and efficient workforce management.</p>
-        </div>
-      </div>
-
-      <div class="Second-box">
-        <div class="footer-header">Quick Links</div>
-        <div class="Quick-Link">
-          <span><img src="./assets/images/home.png" alt="home icon"><a href="home.html">Home</a></span>
-          <span><img src="./assets/images/about.png" alt="about icon"><a href="about.html">About</a></span>
-          <span><img src="./assets/images/jobs.png" alt="jobs icon"><a href="#">Jobs</a></span>
-          <span><img src="./assets/images/contact.png" alt="contact icon"><a href="contact.html">Contact</a></span>
-        </div>
-      </div>
-
-      <div class="Third-box">
-        <div class="footer-header">Contact Details</div>
-        <div class="Contact-footer">
-          <span><img src="./assets/images/phone.png" alt="phone icon">+91 9503690491</span>
-          <span><img src="./assets/images/email.png" alt="email icon">amitvishwakarma3939@gmail.com</span>
-          <span><img src="./assets/images/location.png" alt="location icon">Room No.402, 2nd Floor, Mehta Chembur
-            bulding, Nallasopara (East), Maharashtra, India</span>
+        <p class="footer-desc">Work Connect is a digital platform connecting people who need skilled workers with reliable professionals for plumbing, electrical, carpentry, cleaning, and more.</p>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/" target="_blank" class="footer-social"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.facebook.com/" target="_blank" class="footer-social"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://web.whatsapp.com/" target="_blank" class="footer-social"><i class="fab fa-whatsapp"></i></a>
+          <a href="https://in.linkedin.com/" target="_blank" class="footer-social"><i class="fab fa-linkedin-in"></i></a>
+          <a href="https://www.youtube.com/" target="_blank" class="footer-social"><i class="fab fa-youtube"></i></a>
         </div>
       </div>
-
-      <div class="Forth-box">
-        <div class="footer-header">Follow On Us</div>
-        <div class="Follow-icon">
-          <a href="https://www.youtube.com/" target="_blank"><i class="fa-brands fa-youtube fa-2xl"
-              style="color: #ffffff;"></i></a>
-          <a href="https://www.instagram.com/" target="_blank"><i class="fa-brands fa-instagram fa-2xl"
-              style="color: #ffffff;"></i></a>
-          <a href="https://www.facebook.com/" target="_blank"><i class="fa-brands fa-facebook fa-2xl"
-              style="color: #ffffff;"></i></a>
-          <a href="https://in.linkedin.com/" target="_blank"><i class="fa-brands fa-linkedin fa-2xl"
-              style="color: #ffffff;"></i></a>
-          <a href="https://web.whatsapp.com/" target="_blank"><i class="fa-brands fa-whatsapp fa-2xl"
-              style="color: #ffffff;"></i></a>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="home.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="login.php">Sign In</a></li>
+          <li><a href="login.php">Register</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Categories</h4>
+        <ul class="footer-links">
+          <li><a href="login.php">Plumber</a></li>
+          <li><a href="login.php">Electrician</a></li>
+          <li><a href="login.php">Carpenter</a></li>
+          <li><a href="login.php">Painter</a></li>
+          <li><a href="login.php">Technician</a></li>
+          <li><a href="login.php">Cook</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <div class="footer-contact">
+          <div class="footer-contact-item">
+            <i class="fas fa-phone footer-contact-icon"></i>
+            <span>+91 9503690491</span>
+          </div>
+          <div class="footer-contact-item">
+            <i class="fas fa-envelope footer-contact-icon"></i>
+            <span>amitvishwakarma3939@gmail.com</span>
+          </div>
+          <div class="footer-contact-item">
+            <i class="fas fa-location-dot footer-contact-icon"></i>
+            <span>Room 402, Mehta Chembur Building, Nallasopara (East), Maharashtra</span>
+          </div>
         </div>
       </div>
-
     </div>
+    <div class="footer-bottom">
+      <span>© 2026 Work Connect – Worker Job Portal. All Rights Reserved.</span>
+      <span>Made with <i class="fas fa-heart" style="color:var(--primary);"></i> in Maharashtra</span>
+    </div>
+  </div>
+</footer>
 
-    <div class="Copyright-content">© 2026 Smart Labouring System | All Rights Reserved</div>
-  </footer>
+<script>
+  function toggleMobileNav() {
+    document.getElementById('mobileNav').classList.toggle('open');
+  }
+  document.addEventListener('click', function(e) {
+    const nav = document.getElementById('mobileNav');
+    if (nav.classList.contains('open') && !nav.contains(e.target) && !e.target.closest('.hamburger')) {
+      nav.classList.remove('open');
+    }
+  });
 
-  <script src="./assets/js/javascript.js"></script>
-  <script>
-    (function () {
-      const statusEl = document.getElementById('form-status');
-      const form = document.querySelector('.contact-service form');
-      const btn = form ? form.querySelector('.submit-btn') : null;
-      const btnText = btn ? btn.querySelector('.btn-text') : null;
-      const params = new URLSearchParams(window.location.search);
-      const formStatus = params.get('form');
+  (function () {
+    const statusEl = document.getElementById('form-status');
+    const form = document.getElementById('contactForm');
+    const btn = document.getElementById('submitBtn');
+    const params = new URLSearchParams(window.location.search);
+    const formStatus = params.get('form');
 
-      if (statusEl && formStatus) {
-        const map = {
-          success: { cls: 'success', msg: 'Message submitted successfully. We will contact you soon.' },
-          invalid_email: { cls: 'error', msg: 'Please enter a valid email address.' },
-          too_long: { cls: 'error', msg: 'Input is too long. Please shorten your message.' },
-          error: { cls: 'error', msg: 'Could not submit right now. Please try again.' }
-        };
-        const data = map[formStatus] || map.error;
-        statusEl.classList.add(data.cls);
-        statusEl.textContent = data.msg;
-        history.replaceState({}, '', window.location.pathname);
-      }
+    if (statusEl && formStatus) {
+      const map = {
+        success: { cls: 'success', msg: '✓ Message sent successfully! We will contact you soon.', icon: 'fa-circle-check' },
+        invalid_email: { cls: 'error', msg: 'Please enter a valid email address.', icon: 'fa-circle-exclamation' },
+        too_long: { cls: 'error', msg: 'Input is too long. Please shorten your message.', icon: 'fa-circle-exclamation' },
+        error: { cls: 'error', msg: 'Could not submit right now. Please try again.', icon: 'fa-circle-exclamation' }
+      };
+      const data = map[formStatus] || map.error;
+      statusEl.classList.add(data.cls);
+      statusEl.innerHTML = `<i class="fas ${data.icon}"></i> ${data.msg}`;
+      history.replaceState({}, '', window.location.pathname);
+    }
 
-      if (form && btn && btnText) {
-        form.addEventListener('submit', function () {
-          btn.classList.add('is-loading');
-          btn.disabled = true;
-          btnText.textContent = 'Submitting...';
-        });
-      }
-    })();
-  </script>
+    if (form && btn) {
+      form.addEventListener('submit', function () {
+        btn.classList.add('is-loading');
+        btn.disabled = true;
+        btn.querySelector('.btn-text').textContent = 'Sending...';
+      });
+    }
+  })();
+</script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({ duration: 600, once: true, offset: 30, easing: 'ease-out-cubic' });
+</script>
 </body>
 </html>

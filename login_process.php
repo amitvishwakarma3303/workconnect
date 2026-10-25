@@ -3,7 +3,7 @@ session_start();
 require_once 'includes/db_connect.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'] ?? '';
+    $username = trim($_POST['username'] ?? '');
     $password = $_POST['password'] ?? '';
 
     if (!empty($username) && !empty($password)) {
@@ -18,16 +18,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['email'] = $user['email'];
             $_SESSION['role'] = $user['role_name'];
 
-            // Route based on role
             switch ($user['role_name']) {
                 case 'admin':
                     header("Location: admin/dashboard.php");
                     break;
-                case 'employer':
-                    header("Location: employer/dashboard.php");
+                case 'user':
+                    header("Location: user/dashboard.php");
                     break;
-                case 'employee':
-                    header("Location: employee/dashboard.php");
+                case 'worker':
+                    header("Location: worker/dashboard.php");
                     break;
                 default:
                     $_SESSION['error'] = "Invalid user role.";

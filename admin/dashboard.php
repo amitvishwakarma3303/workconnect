@@ -3,15 +3,32 @@ require_once '../includes/auth_middleware.php';
 require_once '../includes/db_connect.php';
 checkRole(['admin']);
 
-// Fetch stats
-$total_users = $pdo->query("SELECT COUNT(*) FROM users")->fetchColumn();
-$active_jobs = $pdo->query("SELECT COUNT(*) FROM jobs")->fetchColumn();
+// Fetch stats aligned with the synopsis
+$total_users = $pdo->query("SELECT COUNT(*) FROM users JOIN roles ON users.role_id = roles.id WHERE roles.role_name = 'user'")->fetchColumn();
+$total_workers = $pdo->query("SELECT COUNT(*) FROM users JOIN roles ON users.role_id = roles.id WHERE roles.role_name = 'worker'")->fetchColumn();
+$total_categories = $pdo->query("SELECT COUNT(*) FROM categories")->fetchColumn();
+$total_requests = $pdo->query("SELECT COUNT(*) FROM work_requests")->fetchColumn();
 
-$role_stmt = $pdo->query("SELECT roles.role_name, COUNT(users.id) as count FROM roles LEFT JOIN users ON roles.id = users.role_id GROUP BY roles.role_name");
-$role_counts = $role_stmt->fetchAll(PDO::FETCH_KEY_PAIR);
+// Recent Workers
+$recent_workers = $pdo->query("
+    SELECT u.id, u.username, u.email, u.created_at, wp.full_name, wp.location, wp.experience_years, c.name as category_name
+    FROM users u
+    JOIN roles r ON u.role_id = r.id
+    LEFT JOIN worker_profiles wp ON u.id = wp.user_id
+    LEFT JOIN categories c ON wp.category_id = c.id
+    WHERE r.role_name = 'worker'
+    ORDER BY u.created_at DESC LIMIT 5
+")->fetchAll();
 
-// Recent Users
-$recent_users = $pdo->query("SELECT users.*, roles.role_name FROM users JOIN roles ON users.role_id = roles.id ORDER BY users.created_at DESC LIMIT 5")->fetchAll();
+// Recent Work Requests
+$recent_requests = $pdo->query("
+    SELECT wr.*, u1.username as client_name, u2.username as worker_name, c.name as category_name
+    FROM work_requests wr
+    JOIN users u1 ON wr.user_id = u1.id
+    JOIN users u2 ON wr.worker_id = u2.id
+    LEFT JOIN categories c ON wr.category_id = c.id
+    ORDER BY wr.created_at DESC LIMIT 5
+")->fetchAll();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,148 +36,154 @@ $recent_users = $pdo->query("SELECT users.*, roles.role_name FROM users JOIN rol
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Work Connect</title>
+    <link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Outfit', sans-serif; }
     </style>
 </head>
-<body class="bg-gray-50 font-sans">
+<body class="bg-slate-50 font-sans">
 
 <div class="flex h-screen overflow-hidden">
-    
-    <!-- Sidebar -->
+    <!-- Admin Sidebar -->
     <?php include '../includes/admin_sidebar.php'; ?>
 
     <main class="flex-1 flex flex-col overflow-y-auto">
-        
-        <!-- Header -->
-        <header class="bg-white border-b border-gray-100 p-6 flex justify-between items-center sticky top-0 z-10">
+        <!-- Top Header -->
+        <header class="bg-white border-b border-slate-200/80 p-4 md:px-8 flex justify-between items-center sticky top-0 z-20">
             <div class="flex items-center space-x-3">
-                <button onclick="toggleSidebar()" class="md:hidden text-indigo-900">
-                    <i class="fas fa-bars text-2xl"></i>
+                <button onclick="toggleSidebar()" class="md:hidden text-slate-700 text-xl focus:outline-none">
+                    <i class="fas fa-bars"></i>
                 </button>
-                <h2 class="text-xl font-bold text-gray-800">System Overview</h2>
+                <div>
+                    <h2 class="text-lg md:text-xl font-bold text-slate-800">Admin Control Center</h2>
+                    <p class="text-xs text-slate-400">Work Connect &bull; Worker Job Portal Administration</p>
+                </div>
             </div>
-            <div class="flex items-center space-x-4">
-                <div class="text-right hidden sm:block">
-                    <p class="text-sm font-bold text-gray-900"><?php echo $_SESSION['username']; ?></p>
-                    <p class="text-[10px] text-indigo-600 font-bold uppercase tracking-widest leading-none">Super Administrator</p>
-                </div>
-                <div class="w-10 h-10 bg-indigo-900 text-white rounded-full flex items-center justify-center font-bold">
-                    <?php echo strtoupper(substr($_SESSION['username'], 0, 1)); ?>
-                </div>
+            <div class="flex items-center space-x-3">
+                <span class="px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full text-xs font-bold uppercase">Super Admin</span>
             </div>
         </header>
 
-        <div class="p-6 md:p-10 space-y-10">
+        <!-- Content -->
+        <div class="p-4 md:p-8 space-y-8 max-w-7xl mx-auto w-full">
             
             <!-- Stats Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Total Users -->
-                <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-50 hover:shadow-md transition-shadow">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="bg-blue-50 p-3 rounded-2xl text-blue-600"><i class="fas fa-users text-xl"></i></div>
-                        <span class="text-green-500 text-xs font-bold">+12%</span>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Clients / Users -->
+                <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Registered Clients</p>
+                        <p class="text-3xl font-extrabold text-slate-800 mt-1"><?php echo number_format($total_users); ?></p>
                     </div>
-                    <p class="text-sm text-gray-400 font-medium">Total Users</p>
-                    <p class="text-3xl font-bold text-gray-900 mt-1"><?php echo number_format($total_users); ?></p>
+                    <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl">
+                        <i class="fas fa-users"></i>
+                    </div>
                 </div>
-                <!-- Active Jobs -->
-                <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-50 hover:shadow-md transition-shadow">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="bg-indigo-50 p-3 rounded-2xl text-indigo-600"><i class="fas fa-briefcase text-xl"></i></div>
-                        <span class="text-indigo-500 text-xs font-bold">Live</span>
+
+                <!-- Workers -->
+                <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Skilled Workers</p>
+                        <p class="text-3xl font-extrabold text-emerald-600 mt-1"><?php echo number_format($total_workers); ?></p>
                     </div>
-                    <p class="text-sm text-gray-400 font-medium">Active Jobs</p>
-                    <p class="text-3xl font-bold text-gray-900 mt-1"><?php echo number_format($active_jobs); ?></p>
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl">
+                        <i class="fas fa-hard-hat"></i>
+                    </div>
                 </div>
-                <!-- Employers -->
-                <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-50 hover:shadow-md transition-shadow">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="bg-purple-50 p-3 rounded-2xl text-purple-600"><i class="fas fa-user-tie text-xl"></i></div>
-                        <span class="text-xs font-bold text-gray-400">Hub</span>
+
+                <!-- Work Categories -->
+                <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Work Categories</p>
+                        <p class="text-3xl font-extrabold text-indigo-600 mt-1"><?php echo number_format($total_categories); ?></p>
                     </div>
-                    <p class="text-sm text-gray-400 font-medium">Employers</p>
-                    <p class="text-3xl font-bold text-gray-900 mt-1"><?php echo number_format($role_counts['employer'] ?? 0); ?></p>
+                    <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-xl">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
                 </div>
-                <!-- Employees -->
-                <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-50 hover:shadow-md transition-shadow">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="bg-green-50 p-3 rounded-2xl text-green-600"><i class="fas fa-hard-hat text-xl"></i></div>
-                        <span class="text-xs font-bold text-gray-400">Workforce</span>
+
+                <!-- Total Work Requests -->
+                <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Work Requests</p>
+                        <p class="text-3xl font-extrabold text-amber-500 mt-1"><?php echo number_format($total_requests); ?></p>
                     </div>
-                    <p class="text-sm text-gray-400 font-medium">Employees</p>
-                    <p class="text-3xl font-bold text-gray-900 mt-1"><?php echo number_format($role_counts['employee'] ?? 0); ?></p>
+                    <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl">
+                        <i class="fas fa-clipboard-check"></i>
+                    </div>
                 </div>
             </div>
 
             <!-- Management Section -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                
-                <!-- Recent Registrations -->
-                <div class="bg-white rounded-3xl shadow-sm border border-gray-50 p-8">
-                    <div class="flex justify-between items-center mb-8">
-                        <h3 class="text-xl font-bold text-gray-900">Recent Registrations</h3>
-                        <a href="users.php" class="text-sm font-bold text-indigo-600 hover:underline">Manage All</a>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Recent Registered Workers -->
+                <div class="bg-white rounded-3xl border border-slate-200/80 p-6 shadow-sm">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-base font-bold text-slate-800">Recent Registered Workers</h3>
+                        <a href="workers.php" class="text-xs font-bold text-indigo-600 hover:underline">Manage All</a>
                     </div>
-                    <div class="space-y-6">
-                        <?php foreach ($recent_users as $user): ?>
-                        <div class="flex items-center justify-between group">
-                            <div class="flex items-center space-x-4">
-                                <div class="w-12 h-12 rounded-2xl bg-gray-50 flex items-center justify-center text-gray-400 group-hover:bg-indigo-50 group-hover:text-indigo-600 transition-colors">
-                                    <i class="fas fa-user"></i>
+                    <div class="space-y-4">
+                        <?php if (empty($recent_workers)): ?>
+                            <p class="text-xs text-slate-400 py-6 text-center">No workers registered yet.</p>
+                        <?php else: ?>
+                            <?php foreach ($recent_workers as $w): ?>
+                                <div class="flex items-center justify-between p-3 rounded-2xl bg-slate-50/70 border border-slate-100">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center text-sm">
+                                            <?php echo strtoupper(substr($w['username'], 0, 1)); ?>
+                                        </div>
+                                        <div>
+                                            <p class="font-bold text-slate-800 text-xs"><?php echo htmlspecialchars($w['full_name'] ?: $w['username']); ?></p>
+                                            <p class="text-[10px] text-slate-400"><?php echo htmlspecialchars($w['category_name'] ?: 'General'); ?> &bull; <?php echo htmlspecialchars($w['location'] ?: 'Local'); ?></p>
+                                        </div>
+                                    </div>
+                                    <span class="text-[10px] font-bold text-slate-400"><?php echo date('M d, Y', strtotime($w['created_at'])); ?></span>
                                 </div>
-                                <div>
-                                    <p class="font-bold text-gray-900"><?php echo htmlspecialchars($user['username']); ?></p>
-                                    <p class="text-xs text-gray-400"><?php echo htmlspecialchars($user['email']); ?></p>
-                                </div>
-                            </div>
-                            <span class="px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider <?php echo $user['role_name'] == 'employer' ? 'bg-purple-50 text-purple-600' : 'bg-green-50 text-green-600'; ?>">
-                                <?php echo $user['role_name']; ?>
-                            </span>
-                        </div>
-                        <?php endforeach; ?>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </div>
                 </div>
 
-                <!-- Quick Actions / System Health -->
-                <div class="space-y-6">
-                    <div class="bg-indigo-900 rounded-3xl p-8 text-white shadow-xl shadow-indigo-100 overflow-hidden relative">
-                         <i class="fas fa-shield-alt absolute -right-10 -bottom-10 text-9xl text-white/5"></i>
-                         <h3 class="text-xl font-bold mb-2">System Health</h3>
-                         <p class="text-indigo-200 text-sm mb-8">Everything is running smoothly. 0 critical issues reported today.</p>
-                         <div class="grid grid-cols-2 gap-4">
-                             <div class="bg-white/10 p-4 rounded-2xl border border-white/10">
-                                 <p class="text-[10px] uppercase font-bold text-indigo-300">Server Load</p>
-                                 <p class="text-xl font-bold">14%</p>
-                             </div>
-                             <div class="bg-white/10 p-4 rounded-2xl border border-white/10">
-                                 <p class="text-[10px] uppercase font-bold text-indigo-300">DB Connections</p>
-                                 <p class="text-xl font-bold">Active</p>
-                             </div>
-                         </div>
+                <!-- Recent Work Requests -->
+                <div class="bg-white rounded-3xl border border-slate-200/80 p-6 shadow-sm">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-base font-bold text-slate-800">Recent Work Requests</h3>
+                        <a href="requests.php" class="text-xs font-bold text-indigo-600 hover:underline">View All</a>
                     </div>
-                    
-                    <div class="bg-white rounded-3xl border border-gray-50 p-6 flex items-center justify-between">
-                        <div class="flex items-center space-x-4">
-                             <div class="bg-red-50 p-4 rounded-2xl text-red-600"><i class="fas fa-exclamation-triangle"></i></div>
-                             <div>
-                                 <h4 class="font-bold text-gray-900">Pending Flags</h4>
-                                 <p class="text-sm text-gray-400">3 jobs need moderation review.</p>
-                             </div>
-                        </div>
-                        <a href="jobs.php" class="w-10 h-10 rounded-full flex items-center justify-center bg-gray-50 text-gray-900 hover:bg-gray-100"><i class="fas fa-chevron-right"></i></a>
+                    <div class="space-y-4">
+                        <?php if (empty($recent_requests)): ?>
+                            <p class="text-xs text-slate-400 py-6 text-center">No work requests made yet.</p>
+                        <?php else: ?>
+                            <?php foreach ($recent_requests as $r): ?>
+                                <div class="p-3.5 rounded-2xl bg-slate-50/70 border border-slate-100 space-y-1.5">
+                                    <div class="flex justify-between items-start">
+                                        <p class="font-bold text-slate-800 text-xs line-clamp-1"><?php echo htmlspecialchars($r['title']); ?></p>
+                                        <span class="text-[10px] font-bold px-2 py-0.5 rounded-full uppercase
+                                            <?php 
+                                            if ($r['status'] === 'accepted') echo 'bg-emerald-50 text-emerald-700';
+                                            elseif ($r['status'] === 'completed') echo 'bg-blue-50 text-blue-700';
+                                            elseif ($r['status'] === 'rejected') echo 'bg-red-50 text-red-700';
+                                            else echo 'bg-amber-50 text-amber-700';
+                                            ?>">
+                                            <?php echo htmlspecialchars($r['status']); ?>
+                                        </span>
+                                    </div>
+                                    <div class="flex justify-between text-[10px] text-slate-400">
+                                        <span><?php echo htmlspecialchars($r['client_name']); ?> &rarr; <?php echo htmlspecialchars($r['worker_name']); ?></span>
+                                        <span><?php echo date('M d', strtotime($r['created_at'])); ?></span>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </div>
                 </div>
-
             </div>
 
         </div>
-
     </main>
-
 </div>
 
 </body>

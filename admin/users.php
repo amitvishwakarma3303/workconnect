@@ -40,6 +40,7 @@ $users = $stmt->fetchAll();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Users - Admin</title>
+    <link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -101,7 +102,7 @@ $users = $stmt->fetchAll();
                                         </div>
                                     </td>
                                     <td class="p-6">
-                                        <span class="px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider <?php echo $user['role_name'] == 'employer' ? 'bg-purple-50 text-purple-600' : ($user['role_name'] == 'admin' ? 'bg-red-50 text-red-600' : 'bg-green-50 text-green-600'); ?>">
+                                        <span class="px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider <?php echo $user['role_name'] == 'admin' ? 'bg-red-50 text-red-600' : ($user['role_name'] == 'worker' ? 'bg-emerald-50 text-emerald-600' : 'bg-blue-50 text-blue-600'); ?>">
                                             <?php echo $user['role_name']; ?>
                                         </span>
                                     </td>
